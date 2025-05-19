@@ -1,0 +1,2 @@
+The size of time series data is 50 GB and exceeds the OSF storage capacity.
+Upon the manuscript has been accepted, we will add a link to another archive. We are not doing this during the review process to stay anonymous.
