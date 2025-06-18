@@ -1,0 +1,12 @@
+numpy
+pandas
+comm
+matplotlib
+glob2
+scipy
+plotly
+IPython
+tqdm
+dtw-python
+statsmodels
+seaborn

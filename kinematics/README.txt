@@ -1,2 +1,1 @@
-The size of time series data is 50 GB and exceeds the OSF storage capacity.
-Upon the manuscript has been accepted, we will add a link to another archive. We are not doing this during the review process to stay anonymous.
+The merged timeseries data are available on the OSF storage. Please download the zip files, extract the files from the zip, and store them in the "01_merged_ts" under "data/processed" folder.
