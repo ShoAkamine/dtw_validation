@@ -22,15 +22,18 @@ editor_options:
 library(tidyverse)
 library(ggtext)
 library(plotly)
-library(patchwork) #for combined plots
-library(plotrix) #std.error()
+library(gridExtra)    #for grid.arrange()
+library(ggpubr)       #for adding stats to plots
+library(patchwork)    #for combined plots
+library(plotrix)      #std.error()
 library(lme4)
 library(lmerTest)
-library(jtools) #summ()
+library(jtools)       #summ()
 library(glmmTMB)
-library(performance) #check_model()
-library(sjPlot) #plot_model()
+library(performance)  #check_model()
+library(sjPlot)       #plot_model()
 library(kableExtra)
+library(svglite)      #for producing svg images
 
 ### Set global options
 options(digits = 3) # set the default number of digits to 3
@@ -48,7 +51,7 @@ knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
 ```{r}
 ### Load data
 df_dtw_f2f = read_csv("data/dtw_distance_f2f.csv") %>% 
-  select(comparison_id, pair, target, average_distance, average_distance_xyz,
+  select(comparison_id, pair, target, average_distance,
          shape, movement, orientation, position) %>%
   mutate(dataset = "f2f",
          pair = as.factor(pair),
@@ -66,7 +69,7 @@ df_dtw_f2f = read_csv("data/dtw_distance_f2f.csv") %>%
 
 df_dtw_zoom = read_csv("data/dtw_distance_zoom.csv") %>% 
   rename(target = target_2) %>%
-  select(comparison_id, pair, target, average_distance, average_distance_xyz, hands_dtw) %>%
+  select(comparison_id, pair, target, average_distance, average_distance, hands_dtw) %>%
   mutate(dataset = "zoom",
          pair = as.factor(pair),
          target = as.factor(target))
@@ -154,20 +157,20 @@ df_dtw_zoom_long_res = df_dtw_zoom %>%
 
 ***
 
-# F2f dataset
+# ===F2f dataset===
 ## Summarize the data
 ```{r}
 ### [Validation] Mean distance for validation data
 mean_distance_by_pp_f2f = df_dtw_f2f %>% 
   group_by(pair) %>%
-  summarize(mean_distance = mean(average_distance_xyz)) %>%
+  summarize(mean_distance = mean(average_distance)) %>%
   ungroup()
 
 mean_distance_f2f_smop = df_dtw_f2f %>%
   group_by(n_features_smop) %>%
-  summarize(mean_distance = mean(average_distance_xyz),
-            sd = sd(average_distance_xyz),
-            se = std.error(average_distance_xyz),
+  summarize(mean_distance = mean(average_distance),
+            sd = sd(average_distance),
+            se = std.error(average_distance),
             count = n(),
             lower_ci = mean_distance - qt(1 - (0.05 / 2), count - 1) * se,
             upper_ci = mean_distance + qt(1 - (0.05 / 2), count - 1) * se) %>%
@@ -184,7 +187,7 @@ mean_distance_f2f_smop
 ### by SMOP features
 ```{r}
 dis_f2f_feature = df_dtw_f2f_long %>%
-  ggplot(aes(x = feature, y = average_distance_xyz, 
+  ggplot(aes(x = feature, y = average_distance, 
              fill = similarity, color = similarity)) +
   ggdist::stat_halfeye(adjust = 1, width = 0.5, .width = 0, ,
                        point_color = NA, alpha = 0.6, justification = -0.4) +
@@ -213,21 +216,19 @@ dis_f2f_feature = df_dtw_f2f_long %>%
         legend.position = "top",
         legend.title = element_blank(),
         plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
-dis_f2f_feature
+# dis_f2f_feature
 ```
 
 ```{r, include = FALSE}
-pdf(file="figures/distance_f2f_feature.pdf", width=8, height=4)
-dis_f2f_feature
-dev.off()
+# ggsave("figures/distance_f2f_feature.svg", width=8, height=4, dpi=600)
 ```
 
 <br>
 
 ### by the number of similar features
-```{r, message=FALSE, warning=FALSE}
+```{r, message=T, warning=T}
 dis_f2f_n_features = df_dtw_f2f %>%
-  ggplot(aes(x = n_features_smop, y = average_distance_xyz, 
+  ggplot(aes(x = n_features_smop, y = average_distance, 
              group = n_features_smop)) +
   ggdist::stat_halfeye(adjust = 1, width = 0.8, .width = 0,
                        point_color = NA, alpha = 0.5) +
@@ -236,11 +237,15 @@ dis_f2f_n_features = df_dtw_f2f %>%
   geom_boxplot(width = .25, outlier.shape = NA, color = "black") +
   geom_smooth(aes(x=as.numeric(n_features_smop), group=NA),
               method = "lm", size = 1) +
+  stat_cor(aes(group = 1),
+           p.accuracy = 0.001, r.accuracy = 0.01,
+           label.y = 0.66,
+           method="spearman") +
   labs(x="Number of similar features", 
        y="Normalized DTW distance") +
   scale_y_continuous(breaks = seq(0, 0.6, 0.1)) +
   coord_cartesian(xlim = c(-0.2, 4.6), 
-                  ylim = c(0, 0.6)) +
+                  ylim = c(0, 0.65)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -251,16 +256,15 @@ dis_f2f_n_features = df_dtw_f2f %>%
         legend.position = "none",
         plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
 
-ggExtra::ggMarginal(dis_f2f_n_features, fill = "lightblue")
-```
-
-```{r, include = FALSE}
-pdf(file="figures/distance_f2f_n_features.pdf", width=8, height=4)
+# ggExtra::ggMarginal(dis_f2f_n_features, fill = "lightblue")
 dis_f2f_n_features
-dev.off()
 ```
 
 ```{r, include = FALSE}
+# ggsave("figures/distance_f2f_n_features.svg", width=6, height=4, dpi=600)
+```
+
+```{r}
 dis_f2f_n_features = dis_f2f_n_features + 
   labs(tag = "A") +
   theme(plot.tag.position = c(0,1),
@@ -273,10 +277,9 @@ dis_f2f_feature = dis_f2f_feature +
 
 combined_p = dis_f2f_n_features + dis_f2f_feature + plot_layout(widths = c(5, 5))
 combined_p[[2]] = combined_p[[2]] + theme(axis.title.y = element_blank())
-
-pdf(file="figures/distance_f2f_combined.pdf", width=10, height=5)
 combined_p
-dev.off()
+
+ggsave("figures/distance_f2f_combined.svg", width=10, height=5, dpi=600)
 ```
 
 <br>
@@ -298,11 +301,11 @@ contrasts(df_dtw_f2f$handshape)
 ### Check the normality assumption of errors
 Linear mixed-effects models assume that the residuals are normally distributed. Let's check this assumption by plotting the residuals of the models. For this, we will use the `check_model()` function from the `performance` package.
 ```{r, fig.height=10}
-model = lmer(average_distance_xyz ~ 1 + (1|pair) + (1|target), 
+model = lmer(average_distance ~ 1 + (1|pair) + (1|target), 
              data = subset(df_dtw_f2f))
 check_model(model)
 
-model_log = lmer(log(average_distance_xyz) ~ 1 + (1|pair) + (1|target), 
+model_log = lmer(log(average_distance) ~ 1 + (1|pair) + (1|target), 
                  data = subset(df_dtw_f2f))
 check_model(model_log)
 ```
@@ -314,7 +317,7 @@ We didn't detect any violations of the normality assumption. Also, the posterior
 ### Correlation between distance and similarity coding
 ```{r}
 x = df_dtw_f2f$n_features_smop
-y = df_dtw_f2f$average_distance_xyz
+y = df_dtw_f2f$average_distance
 
 cor.test(x, y, method="pearson")
 cor.test(x, y, method="spearman")
@@ -330,7 +333,7 @@ Let's examine if the normalized DTW distance is significantly lower when two ges
 First, we will check if the DTW distance is significantly lower for gesture pairs that align in more features.
 
 ```{r}
-lmer_n_features = lmer(average_distance_xyz ~ n_features_smop + 
+lmer_n_features = lmer(average_distance ~ n_features_smop + 
                          (1|pair) + (1|target), 
                        data = df_dtw_f2f)
 summ(lmer_n_features, digits = 3)
@@ -345,36 +348,36 @@ Next, we will apply regression on each feature separately to see if the DTW dist
 
 Lastly, we will include all features as fixed effects in the model to see the effect of each feature while controlling for the other features.
 ```{r}
-lmer_shape = lmer(average_distance_xyz ~ 
+lmer_shape = lmer(average_distance ~ 
                     handshape + (1|pair) + (1|target),
                   data = df_dtw_f2f)
 summ(lmer_shape, digits = 3)
 
-lmer_movement = lmer(average_distance_xyz ~ 
+lmer_movement = lmer(average_distance ~ 
                         movement + (1|pair) + (1|target),
                       data = df_dtw_f2f)
 summ(lmer_movement, digits = 3)
 
-lmer_orientation = lmer(average_distance_xyz ~ 
+lmer_orientation = lmer(average_distance ~ 
                            orientation + (1|pair) + (1|target),
                          data = df_dtw_f2f)
 summ(lmer_orientation, digits = 3)
 
-lmer_position = lmer(average_distance_xyz ~ 
+lmer_position = lmer(average_distance ~ 
                         position + (1|pair) + (1|target),
                       data = df_dtw_f2f)
 summ(lmer_position, digits = 3)
 
 
 ### all features
-lmer_feature = lmer(average_distance_xyz ~ 
+lmer_feature = lmer(average_distance ~ 
                       handshape + movement + orientation + position +
                       (1|pair) + (1|target),
                    data = df_dtw_f2f)
 summ(lmer_feature, digits = 3)
 cov2cor(vcov(lmer_feature))
 ```
-The models show that the normalized DTW distance is significantly lower when two gestures are similar than not in terms of movement, orientation, and position (handshape didn't reach significance when controling for other variables). The correlation of fixed effects shows a strong negative correlation between handshape and orientation (-0.3), suggesting that when the slope for orientation is more extremely negative, the slope for handshape becomes flatter. This is likely due to the fact that handshape and orientation are both reflected in relative finger tip positions. This suggests a need for developing a different approach to capturing handshape similarity independently of hand orientation.
+The models show that the normalized DTW distance is significantly lower when two gestures are similar than not in terms of movement, orientation, and position (handshape didn't reach significance when controling for other variables). The correlation of fixed effects shows a weak negative correlation between handshape and orientation (-0.3), suggesting that when the slope for orientation is more extremely negative, the slope for handshape becomes flatter. This is likely due to the fact that handshape and orientation are both reflected in relative finger tip positions. This suggests a need for developing a different approach to capturing handshape similarity independently of hand orientation.
 
 
 <br>
@@ -387,18 +390,18 @@ check_model(lmer_n_features)
 <br>
 
 ## Summary
-In this analysis, we found that the normalized DTW distance is significantly lower when two gestures are similar than not in terms of movement, orientation and position (handshape didn't reach significance). The number of similar features also was significantly negatively associated with the distance, suggesting that DTW can capture gesture form similarity.
+In this analysis, we found that the normalized DTW distance is significantly lower when two gestures are similar than not in terms of movement and orientation (handshape and position didn't reach significance). The number of similar features also was significantly negatively associated with the distance, suggesting that DTW can capture gesture form similarity.
 
 <br>
 
 ***
 
-# Zoom dataset
+# ===Zoom dataset===
 ## Data visualization
 ### by SMOP features
 ```{r}
 dis_zoom_feature = df_dtw_zoom_long %>%
-  ggplot(aes(x = feature, y = average_distance_xyz, 
+  ggplot(aes(x = feature, y = average_distance, 
              fill = similarity_bin, color = similarity_bin)) +
   ggdist::stat_halfeye(adjust = 1, width = 0.5, .width = 0, ,
                        point_color = NA, alpha = 0.6, justification = -0.4) +
@@ -427,15 +430,13 @@ dis_zoom_feature = df_dtw_zoom_long %>%
         legend.position = "top",
         legend.title = element_blank(),
         plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
-  facet_wrap(~feature, nrow = 2)
+  # facet_wrap(~feature, nrow = 2)
 
-dis_zoom_feature
+# dis_zoom_feature
 ```
 
 ```{r, include = FALSE}
-pdf(file="figures/distance_zoom_feature.pdf", width=8, height=6)
-dis_zoom_feature
-dev.off()
+# ggsave("figures/distance_zoom_feature.svg", width=8, height=6, dpi=600)
 ```
 
 <br>
@@ -443,7 +444,7 @@ dev.off()
 ### by the number of similar features
 ```{r, message=FALSE, warning=FALSE}
 dis_zoom_n_features = df_dtw_zoom %>%
-  ggplot(aes(x = n_features, y = average_distance_xyz, 
+  ggplot(aes(x = n_features, y = average_distance, 
              group = n_features)) +
   ggdist::stat_halfeye(adjust = 1, width = 0.8, .width = 0,
                        point_color = NA, alpha = 0.5) +
@@ -452,6 +453,10 @@ dis_zoom_n_features = df_dtw_zoom %>%
   geom_boxplot(width = .25, outlier.shape = NA, color = "black") +
   geom_smooth(aes(x=as.numeric(n_features), group=NA),
               method = "lm", size = 1) +
+  stat_cor(aes(group = 1),
+           p.accuracy = 0.001, r.accuracy = 0.01,
+           label.y = 0.9,
+           method="spearman") +
   labs(x="Number of similar features", 
        y="Normalized DTW distance") +
   scale_y_continuous(breaks = seq(0, 0.8, 0.2)) +
@@ -467,16 +472,14 @@ dis_zoom_n_features = df_dtw_zoom %>%
         legend.position = "none",
         plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
 
-ggExtra::ggMarginal(dis_zoom_n_features, fill = "lightblue")
+# ggExtra::ggMarginal(dis_zoom_n_features, fill = "lightblue")
 ```
 
 ```{r, include = FALSE}
-pdf(file="figures/distance_zoom_n_features.pdf", width=8, height=4)
-ggExtra::ggMarginal(dis_zoom_n_features, fill = "lightblue")
-dev.off()
+# ggsave("figures/distance_zoom_n_features.svg", width=6, height=4, dpi=600)
 ```
 
-```{r, include = FALSE}
+```{r}
 dis_zoom_n_features = dis_zoom_n_features + 
   labs(tag = "A") +
   theme(plot.tag.position = c(0,1),
@@ -489,10 +492,9 @@ dis_zoom_feature = dis_zoom_feature +
 
 combined_p = dis_zoom_n_features + dis_zoom_feature + plot_layout(widths = c(5, 5))
 combined_p[[2]] = combined_p[[2]] + theme(axis.title.y = element_blank())
-
-pdf(file="figures/distance_zoom_combined_bin.pdf", width=10, height=5)
 combined_p
-dev.off()
+
+ggsave("figures/distance_zoom_combined_bin.svg", width=10, height=5, dpi=600)
 ```
 
 
@@ -514,11 +516,11 @@ contrasts(df_dtw_zoom$handshape_bin)
 ### Check the normality assumption of errors
 Linear mixed-effects models assume that the residuals are normally distributed. Let's check this assumption by plotting the residuals of the models. For this, we will use the `check_model()` function from the `performance` package.
 ```{r, fig.height=10}
-model = lmer(average_distance_xyz ~ 1 + (1|pair) + (1|target), 
+model = lmer(average_distance ~ 1 + (1|pair) + (1|target), 
              data = subset(df_dtw_zoom))
 check_model(model)
 
-model_log = lmer(log(average_distance_xyz) ~ 1 + (1|pair) + (1|target), 
+model_log = lmer(log(average_distance) ~ 1 + (1|pair) + (1|target), 
                  data = subset(df_dtw_zoom))
 check_model(model_log)
 ```
@@ -530,20 +532,20 @@ Log-normal model returned a sigular fit (i.e., the model is not able to estimate
 ### Correlation between distance and n_features
 ```{r}
 x = df_dtw_zoom$n_features
-y = df_dtw_zoom$average_distance_xyz
+y = df_dtw_zoom$average_distance
 
 cor.test(x, y, method="pearson")
 cor.test(x, y, method="spearman")
 ```
 
-The correlation between the total similarity score and the normalized DTW distance is significant (r = -0.391, p < 0.001), suggesting that the more similar features two gestures have, the smaller the distance is.
+The correlation between the total similarity score and the normalized DTW distance is significant, suggesting that the more similar features two gestures have, the smaller the distance is.
 
 <br>
 
 ### LMM
 #### Number of features
 ```{r}
-lmer_zoom_n_features = lmer(average_distance_xyz ~ 
+lmer_zoom_n_features = lmer(average_distance ~ 
                               n_features +
                               (1|pair) + (1|target),
                             data = df_dtw_zoom)
@@ -560,29 +562,29 @@ check_model(lmer_zoom_n_features)
 #### Feature-level analysis
 ```{r}
 ### each feature
-lmer_zoom_shape = lmer(average_distance_xyz ~ 
+lmer_zoom_shape = lmer(average_distance ~ 
                          handshape_bin + (1|pair) + (1|target),
                        data = df_dtw_zoom)
 summ(lmer_zoom_shape, digits = 3)
 
-lmer_zoom_movement = lmer(average_distance_xyz ~ 
+lmer_zoom_movement = lmer(average_distance ~ 
                             movement_bin + (1|pair) + (1|target),
                           data = df_dtw_zoom)
 summ(lmer_zoom_movement, digits = 3)
 
-lmer_zoom_orientation = lmer(average_distance_xyz ~ 
+lmer_zoom_orientation = lmer(average_distance ~ 
                                orientation_bin + (1|pair) + (1|target),
                              data = df_dtw_zoom)
 summ(lmer_zoom_orientation, digits = 3)
 
-lmer_zoom_position = lmer(average_distance_xyz ~ 
+lmer_zoom_position = lmer(average_distance ~ 
                             position_bin + (1|pair) + (1|target),
                           data = df_dtw_zoom)
 summ(lmer_zoom_position, digits = 3)
 
 
 ### all features
-lmer_zoom_feature = lmer(average_distance_xyz ~ 
+lmer_zoom_feature = lmer(average_distance ~ 
                            handshape_bin + movement_bin + orientation_bin + position_bin +
                            (1|pair) + (1|target),
                          data = df_dtw_zoom)
@@ -599,7 +601,7 @@ Again, this suggests a need for developing a different approach to capturing han
 
 <br>
 
-# Revised DTW pipeline for Zoom dataset
+# ===Revised DTW pipeline for Zoom dataset===
 A qualitative check on incongruent cases where a pair of gestures was annotated as similar but it's DTW distance was large revealed that the majority of such cases is because of mirrored movements. To tackle this issue, for gestures where speaker A and B used the opposing hands (e.g., speaker used left-hand and speaker B right-hand), we will calculate DTW distance for both original and flipped videos and take the minimum of the two. 
 
 <br>
@@ -610,7 +612,7 @@ A qualitative check on incongruent cases where a pair of gestures was annotated 
 ### Load data
 df_dtw_zoom_v2 = read_csv("data/dtw_distance_zoom_mirrored.csv") %>% 
   rename(target = target_2) %>%
-  select(comparison_id, pair, target, average_distance, average_distance_xyz, hands_dtw) %>%
+  select(comparison_id, pair, target, average_distance, average_distance, hands_dtw) %>%
   mutate(dataset = "zoom",
          pair = as.factor(pair),
          target = as.factor(target))
@@ -680,7 +682,7 @@ df_dtw_zoom_v2_long = left_join(df_dtw_zoom_v2_long, df_dtw_zoom_v2_long_z) %>%
 ### by SMOP features
 ```{r}
 dis_zoom_v2_feature = df_dtw_zoom_v2_long %>%
-  ggplot(aes(x = feature, y = average_distance_xyz, 
+  ggplot(aes(x = feature, y = average_distance, 
              fill = similarity_bin, color = similarity_bin)) +
   ggdist::stat_halfeye(adjust = 1, width = 0.5, .width = 0, ,
                        point_color = NA, alpha = 0.6, justification = -0.4) +
@@ -709,15 +711,13 @@ dis_zoom_v2_feature = df_dtw_zoom_v2_long %>%
         legend.position = "top",
         legend.title = element_blank(),
         plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
-  facet_wrap(~feature, nrow = 2)
+  # facet_wrap(~feature, nrow = 2)
 
-dis_zoom_v2_feature
+# dis_zoom_v2_feature
 ```
 
 ```{r, include = FALSE}
-pdf(file="figures/distance_zoom_v2_feature.pdf", width=8, height=6)
-dis_zoom_v2_feature
-dev.off()
+# ggsave(file="figures/distance_zoom_v2_feature.svg", width=8, height=6, dpi=600)
 ```
 
 <br>
@@ -725,7 +725,7 @@ dev.off()
 ### by the number of similar features
 ```{r, message=FALSE, warning=FALSE}
 dis_zoom_v2_n_features = df_dtw_zoom_v2 %>%
-  ggplot(aes(x = n_features, y = average_distance_xyz, 
+  ggplot(aes(x = n_features, y = average_distance, 
              group = n_features)) +
   ggdist::stat_halfeye(adjust = 1, width = 0.8, .width = 0,
                        point_color = NA, alpha = 0.5) +
@@ -734,6 +734,10 @@ dis_zoom_v2_n_features = df_dtw_zoom_v2 %>%
   geom_boxplot(width = .25, outlier.shape = NA, color = "black") +
   geom_smooth(aes(x=as.numeric(n_features), group=NA),
               method = "lm", size = 1) +
+  stat_cor(aes(group = 1),
+           p.accuracy = 0.001, r.accuracy = 0.01,
+           label.y = 0.7,
+           method="spearman") +
   labs(x="Number of similar features", 
        y="Normalized DTW distance") +
   scale_y_continuous(breaks = seq(0, 0.8, 0.2)) +
@@ -749,16 +753,14 @@ dis_zoom_v2_n_features = df_dtw_zoom_v2 %>%
         legend.position = "none",
         plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
 
-ggExtra::ggMarginal(dis_zoom_v2_n_features, fill = "lightblue")
+# ggExtra::ggMarginal(dis_zoom_v2_n_features, fill = "lightblue")
 ```
 
 ```{r, include = FALSE}
-pdf(file="figures/distance_zoom_v2_n_features.pdf", width=8, height=4)
-ggExtra::ggMarginal(dis_zoom_v2_n_features, fill = "lightblue")
-dev.off()
+# ggsave("figures/distance_zoom_v2_n_features.svg", width=6, height=4, dpi=600)
 ```
 
-```{r, include = FALSE}
+```{r}
 dis_zoom_v2_n_features = dis_zoom_v2_n_features + 
   labs(tag = "A") +
   theme(plot.tag.position = c(0,1),
@@ -771,10 +773,9 @@ dis_zoom_v2_feature = dis_zoom_v2_feature +
 
 combined_p = dis_zoom_v2_n_features + dis_zoom_v2_feature + plot_layout(widths = c(5, 5))
 combined_p[[2]] = combined_p[[2]] + theme(axis.title.y = element_blank())
-
-pdf(file="figures/distance_zoom_v2_combined_bin.pdf", width=10, height=5)
 combined_p
-dev.off()
+
+ggsave("figures/distance_zoom_v2_combined_bin.svg", width=10, height=5, dpi=600)
 ```
 
 
@@ -796,11 +797,11 @@ contrasts(df_dtw_zoom_v2$handshape_bin)
 ### Check the normality assumption of errors
 Linear mixed-effects models assume that the residuals are normally distributed. Let's check this assumption by plotting the residuals of the models. For this, we will use the `check_model()` function from the `performance` package.
 ```{r, fig.height=10}
-model = lmer(average_distance_xyz ~ 1 + (1|pair), 
+model = lmer(average_distance ~ 1 + (1|pair), 
              data = subset(df_dtw_zoom_v2))
 check_model(model)
 
-model_log = lmer(log(average_distance_xyz) ~ 1 + (1|pair), 
+model_log = lmer(log(average_distance) ~ 1 + (1|pair), 
                  data = subset(df_dtw_zoom_v2))
 check_model(model_log)
 ```
@@ -812,20 +813,20 @@ Models including random intercepts for dyads and items returned a singular fit, 
 ### Correlation between distance and n_features
 ```{r}
 x = df_dtw_zoom_v2$n_features
-y = df_dtw_zoom_v2$average_distance_xyz
+y = df_dtw_zoom_v2$average_distance
 
 cor.test(x, y, method="pearson")
 cor.test(x, y, method="spearman")
 ```
 
-The modifed DTW pipeline results in a mush stronger negative correlation (r = -0.561, p < 0.001) between the number of similar features and the normalized DTW distance compared to the original pipeline (r = -0.391). This suggests that the modified DTW pipeline is more sensitive to the similarity of gestures.
+The modifed DTW pipeline results in a stronger negative correlation (r = -0.51) between the number of similar features and the normalized DTW distance compared to the original pipeline (r = -0.41). This suggests that the modified DTW pipeline is more sensitive to the similarity of gestures.
 
 <br>
 
 ### LMM
 #### Number of features
 ```{r}
-lmer_zoom_n_features = lmer(average_distance_xyz ~ 
+lmer_zoom_n_features = lmer(average_distance ~ 
                               n_features +
                               (1|pair),
                             data = df_dtw_zoom_v2)
@@ -842,29 +843,29 @@ check_model(lmer_zoom_n_features)
 #### Feature-level analysis
 ```{r}
 ### each feature
-lmer_zoom_shape = lmer(average_distance_xyz ~ 
+lmer_zoom_shape = lmer(average_distance ~ 
                          handshape_bin + (1|pair),
                        data = df_dtw_zoom_v2)
 summ(lmer_zoom_shape, digits = 3)
 
-lmer_zoom_movement = lmer(average_distance_xyz ~ 
+lmer_zoom_movement = lmer(average_distance ~ 
                             movement_bin + (1|pair),
                           data = df_dtw_zoom_v2)
 summ(lmer_zoom_movement, digits = 3)
 
-lmer_zoom_orientation = lmer(average_distance_xyz ~ 
+lmer_zoom_orientation = lmer(average_distance ~ 
                                orientation_bin + (1|pair),
                              data = df_dtw_zoom_v2)
 summ(lmer_zoom_orientation, digits = 3)
 
-lmer_zoom_position = lmer(average_distance_xyz ~ 
+lmer_zoom_position = lmer(average_distance ~ 
                             position_bin + (1|pair),
                           data = df_dtw_zoom_v2)
 summ(lmer_zoom_position, digits = 3)
 
 
 ### all features
-lmer_zoom_feature = lmer(average_distance_xyz ~ 
+lmer_zoom_feature = lmer(average_distance ~ 
                            handshape_bin + movement_bin + orientation_bin + position_bin +
                            (1|pair),
                          data = df_dtw_zoom_v2)

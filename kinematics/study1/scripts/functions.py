@@ -4,7 +4,6 @@ import pandas as pd                          # data wrangling
 import os                                    # for foldering       
 import glob                                  # for file handling    
 from tqdm import tqdm                        # for progress bars
-from dtw_functions import retrieve_keypoints
 
 ### Functions to use when preprocessing of the time series data ###
 def merge_ts(file, body_cols_to_keep): 
@@ -40,14 +39,14 @@ def adjust_aspect_ratio(df, width=16, height=9):
     scale_x = width / height
     
     # multiply x-coordinates by scale factor
-    keypoint_names = [col for col in list(df.columns) if col.startswith('X_')]
+    keypoint_names = [col for col in list(df.columns) if col.startswith('x_')]
     for keypoint in keypoint_names:
         df[keypoint] = df[keypoint] * scale_x
 
     return df
 
 def flip_y_axis(df):
-    y_cols = [col for col in df.columns if col.startswith('Y_')]
+    y_cols = [col for col in df.columns if col.startswith('y_')]
     for col in y_cols:
         df[col] = df[col] * -1
     return df
@@ -139,36 +138,22 @@ def center_wrist(df):
 # this function loads in annotations and the original time of the timeseries dataframe, and returns annotations for the time series dataframe
 def load_in_event(time_original, adata, col, speaker, i, adj_dur):
     output = np.full(len(time_original), np.nan, dtype=object)  # Initialize output array with NaN values
-    speaker_1 = adata.loc[i, 'speaker_1']
-    speaker_2 = adata.loc[i, 'speaker_2']
     if adj_dur == True:
-        begin_1_col = 'begin_time_1_adj'
-        end_1_col = 'end_time_1_adj'
-        begin_2_col = 'begin_time_2_adj'
-        end_2_col = 'end_time_2_adj'
-    else:
-        begin_1_col = 'begin_time_1'
-        end_1_col = 'end_time_1'
-        begin_2_col = 'begin_time_2'
-        end_2_col = 'end_time_2'
-
-    if speaker == 'A':
-        if speaker_1 == 'A':
-            output[(time_original >= adata.loc[i, begin_1_col]) & (time_original <= adata.loc[i, end_1_col])] = adata.iloc[i, adata.columns.get_loc(col)]
-        elif speaker_2 == 'A':
-            output[(time_original >= adata.loc[i, begin_2_col]) & (time_original <= adata.loc[i, end_2_col])] = adata.iloc[i, adata.columns.get_loc(col)]
-    elif speaker == 'B':
-        if speaker_1 == 'B':
-            output[(time_original >= adata.loc[i, begin_1_col]) & (time_original <= adata.loc[i, end_1_col])] = adata.iloc[i, adata.columns.get_loc(col)]
-        elif speaker_2 == 'B':
-            output[(time_original >= adata.loc[i, begin_2_col]) & (time_original <= adata.loc[i, end_2_col])] = adata.iloc[i, adata.columns.get_loc(col)]
+        if speaker == 'A':
+            output[(time_original >= adata.loc[i, 'A_begin_msec_adj']) & (time_original <= adata.loc[i, 'A_end_msec_adj'])] = adata.iloc[i, adata.columns.get_loc(col)]
+        elif speaker == 'B':
+            output[(time_original >= adata.loc[i, 'B_begin_msec_adj']) & (time_original <= adata.loc[i, 'B_end_msec_adj'])] = adata.iloc[i, adata.columns.get_loc(col)]
+    else:   
+        if speaker == 'A':
+            # Assign the annotation if the time is between the begin and end time of the annotation 
+            output[(time_original >= adata.loc[i, 'A_begin_msec']) & (time_original <= adata.loc[i, 'A_end_msec'])] = adata.iloc[i, adata.columns.get_loc(col)]
+        elif speaker == 'B':
+            output[(time_original >= adata.loc[i, 'B_begin_msec']) & (time_original <= adata.loc[i, 'B_end_msec'])] = adata.iloc[i, adata.columns.get_loc(col)] 
     
     return output
 
 
 def export_merge_annot(MT_files, anno, ts_annot_folder, adj_dur=False):
-    # merged_data_list = []
-    keypoints = retrieve_keypoints()
     merged_data = pd.DataFrame()  # Initialize an empty DataFrame
 
     n_comparisons = len(anno)
@@ -187,7 +172,6 @@ def export_merge_annot(MT_files, anno, ts_annot_folder, adj_dur=False):
 
         speaker = fname.split('pp')[1] # Extract the speaker from the file name
         pair_n = int(fname.split('pair')[1].split('_')[0]) # Extract the pair number from the file name and convert it to an integer
-        anno["pairnr"] = anno["pair"].str[-2:].astype(int)
         if pair_n not in anno['pairnr'].values:
             # print("Pair number " + str(pair_n) + " not found in the annotation file.")
             continue
@@ -195,9 +179,8 @@ def export_merge_annot(MT_files, anno, ts_annot_folder, adj_dur=False):
         # print("Now processing: " + mt_file + " for speaker " + speaker + "...")
         mdata = pd.read_csv(mt_file)
         adata = anno[anno['pairnr'] == pair_n].reset_index(drop=True)
-        mdata = flip_sign_for_y(mdata)
-        mdata = calculate_relative_position(mdata, keypoints)
-        change_wrist_col_name(mdata)
+        # mdata = calculate_relative_position(mdata, keypoints)
+        # change_wrist_col_name(mdata)
         merged_data = mdata.copy()
 
         cols = ["comparison_id"]

@@ -1,0 +1,940 @@
+---
+title: "Supplementary analysis"
+date: "Last updated: `r Sys.Date()`"
+output: 
+  html_document:
+    theme: cosmo
+    toc: true
+    toc_depth: 4
+    toc_float:
+      collapsed: true
+    number_sections: true
+    df_print: paged
+    code-tools: true
+    code-fold: true
+    code_folding: hide #hide the code section initially
+editor_options: 
+  markdown: 
+    wrap: sentence #Wrap texts in code cells
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggtext)
+library(plotly)
+library(gridExtra)    #for grid.arrange()
+library(ggpubr)       #for adding stats to plots
+library(patchwork)    #for combined plots
+library(plotrix)      #std.error()
+library(lme4)
+library(lmerTest)
+library(jtools)       #summ()
+library(glmmTMB)
+library(performance)  #check_model()
+library(sjPlot)       #plot_model()
+library(kableExtra)
+library(svglite)      #for producing svg images
+
+### Set global options
+options(digits = 3) # set the default number of digits to 3
+options(scipen=999) # turn off scientific notation (e.g., e-10)
+options(dplyr.summarise.inform = FALSE)
+options(render = 'normal_print')
+
+### Rmd settings
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+# 1. Relation between correlation and regression
+In the manuscript, we reported that accounting for mirrored gestures greatly improved the Spearman's rank correlation coefficient (from -0.39 to -0.56, by .17). However, the beta coefficient of mixed effects model only improved by 0.01 (from -0.04 to -0.05), with the SE becoming smaller when accounting for mirrored gestures (from .01 to .007). Why didn't the beta coefficient improve much even though correlation greatly improved?
+
+Let's run some simulations to understand the effect of beta and variance on correlation. In the simulation, we will use the values from our mixed-effects models:
+
+[Study 2 without mirroring]
+- `mean distance` = 0.33
+- `effect_size_s` (beta) = -0.038
+- `sd_l` (sigma) = 0.15
+
+[modified approach]
+- `mean distance` = 0.29
+- `effect_size_s` (beta) = -0.046
+- `sd_l` (sigma) = 0.122
+
+```{r}
+set.seed(123)
+
+### simulate dataframe with small effect size & large deviation (Study 2 without mirroring)
+n = 1000
+mean = 0.31 # mean(0.33, 0.29)
+effect_size_s = -0.038
+sd_l = 0.15
+x = as.integer(runif(n, min=0, max=4))
+y = effect_size_s*x + rnorm(n, mean, sd_l)
+
+df1 = data.frame(x = x, y = y)
+cor1 = cor.test(df1$x, df1$y, method="spearman")
+m = lm(y ~ x, data=df1)
+
+print("======= small effect size & large deviation ======")
+print(cor1$estimate)
+# print(m$coefficients)
+
+
+### simulate dataframe with small effect size & small deviation
+sd_s = 0.122
+x = as.integer(runif(n, min=0, max=4))
+y = effect_size_s*x + rnorm(n, mean, sd_s)
+
+df2 = data.frame(x = x, y = y)
+cor2 = cor.test(df2$x, df2$y, method="spearman")
+m = lm(y ~ x, data=df2)
+
+print("======= small effect size & large deviation ======")
+print(cor2$estimate)
+# print(m$coefficients)
+
+
+### simulate dataframe with large effect size & small deviation (with mirroring)
+effect_size_l = -0.046
+x = as.integer(runif(n, min=0, max=4))
+y = effect_size_l*x + rnorm(n, mean, sd_s)
+
+df3 = data.frame(x = x, y = y)
+cor3 = cor.test(df3$x, df3$y, method="spearman")
+m = lm(y ~ x, data=df3)
+
+print("======= large effect size & small deviation ======")
+print(cor3$estimate)
+# print(m$coefficients)
+
+print("======= diff in correlation score ======")
+print(paste0("diff between df1 and df3: ", round(cor3$estimate - cor1$estimate, 2)))
+
+
+### scatter plots
+p1 = ggplot(df1, aes(x=x, y=y)) +
+  geom_point(alpha=0.3) +
+  geom_smooth(method="lm", color="blue") +
+  coord_cartesian(ylim=c(0, 0.8)) +
+  ggtitle("small effect size & large deviation")
+p2 = ggplot(df2, aes(x=x, y=y)) +
+  geom_point(alpha=0.3) +
+  geom_smooth(method="lm", color="blue") +
+  coord_cartesian(ylim=c(0, 0.8)) +
+  ggtitle("small effect size & small deviation")
+p3 = ggplot(df3, aes(x=x, y=y)) +
+  geom_point(alpha=0.3) +
+  geom_smooth(method="lm", color="blue") +
+  coord_cartesian(ylim=c(0, 0.8)) +
+  ggtitle("large effect size & small deviation")
+
+grid.arrange(p1, p2, p3, ncol=3)
+```
+
+The simulation shows that (i) larger effect size leads to higher correlation, and (ii) smaller SD leads to higher correlation. In the simulation, the correlation score improved approximately by 0.14, which is very close to the degree of improvement we observed in the data.
+
+<br>
+
+## Summary
+The degree of improvement in $\beta$ (from -0.04 to -0.05) from the original to modified approach may appear small compared to the degree of improvement in correlation and thus may seem contradictory. However, these results are not contradictory and can be explained by the fact that correlation is not only influenced by the effect size ($\beta$) but also by the variance in the data ($SD^2$). A higher effect size leads to a stronger correlation, and a smaller variance in the data also leads to a stronger correlation. In our case, the effect size increased by 0.01, and the SD of the data decreased by 0.04 for the modified approach, resulting in a higher correlation. Through a simulation-based approach, we demonstrated that both effect size and SD affects the level of correlation, and we observed a similar degree of increase in correlation.
+
+<br>
+
+==========================================================================
+
+# 2. Supplementary analyses
+We used binary similarity rating (similar/not similar) for the main analysses reported in the manuscript. However, the original ratings was on a scale from 0 to 5, so here we will use the original ratings to see if DTW's predictions correlate with human similarty ratings.
+
+# 2.1 Study 2
+## Data preparation
+```{r, message=FALSE, warning=FALSE}
+### Load data
+df_dtw_zoom = read_csv("data/dtw_distance_zoom.csv") %>% 
+  rename(target = target_2) %>%
+  select(comparison_id, pair, target, average_distance, hands_dtw) %>%
+  mutate(dataset = "zoom",
+         pair = as.factor(pair),
+         target = as.factor(target))
+
+df_sim_coding_zoom = read_csv("data/similarity_coding_zoom.csv") %>% 
+  rename(position = location) %>% 
+  mutate(total_similarity = handshape + movement + orientation + position,
+         ### binary coding
+         handshape_bin = ifelse(handshape >= 4, 1, 0),
+         movement_bin = ifelse(movement >= 4, 1, 0),
+         orientation_bin = ifelse(orientation >= 4, 1, 0),
+         position_bin = ifelse(position >= 4, 1, 0),
+         n_features = handshape_bin + movement_bin + orientation_bin + position_bin,
+         handshape_bin = factor(handshape_bin, 
+                                levels = c(0, 1), 
+                                labels = c("not similar", "similar")),
+         movement_bin = factor(movement_bin,
+                                levels = c(0, 1), 
+                                labels = c("not similar", "similar")),
+         orientation_bin = factor(orientation_bin,
+                                   levels = c(0, 1), 
+                                   labels = c("not similar", "similar")),
+         position_bin = factor(position_bin,
+                                levels = c(0, 1), 
+                                labels = c("not similar", "similar")),
+         ### z-score
+         handshape_z = scale(handshape)[,1],
+         movement_z = scale(movement)[,1],
+         orientation_z = scale(orientation)[,1],
+         position_z = scale(position)[,1],
+         total_similarity_z = scale(total_similarity)[,1]) %>% 
+  select(-notes)
+
+### combine dtw and coding data for zoom dataset
+df_dtw_zoom = right_join(df_dtw_zoom, df_sim_coding_zoom)
+
+### convert to long format for data visualization
+df_dtw_zoom_long = df_dtw_zoom %>%
+  pivot_longer(cols = c("handshape", "movement", "orientation", "position"), 
+               names_to = "feature", 
+               values_to = "similarity") %>% 
+  select(-ends_with("_z"), -ends_with("_bin"))
+
+df_dtw_zoom_long_bin = df_dtw_zoom %>%
+  pivot_longer(cols = c("handshape_bin", "movement_bin", "orientation_bin", "position_bin"), 
+               names_to = "feature", 
+               values_to = "similarity_bin") %>% 
+  mutate(feature = factor(sub("_bin", "", feature),
+                          levels = c("handshape", "movement", "orientation", "position"))) %>% 
+  select(-handshape, -movement, -orientation, -position, -ends_with("_z"))
+
+df_dtw_zoom_long_z = df_dtw_zoom %>%
+  pivot_longer(cols = c("handshape_z", "movement_z", "orientation_z", "position_z"), 
+               names_to = "feature", 
+               values_to = "similarity_z") %>% 
+  mutate(feature = factor(sub("_z", "", feature),
+                          levels = c("handshape", "movement", "orientation", "position"))) %>% 
+  select(-handshape, -movement, -orientation, -position, -ends_with("_bin"))
+
+df_dtw_zoom_long = left_join(df_dtw_zoom_long, df_dtw_zoom_long_z) %>% 
+  left_join(., df_dtw_zoom_long_bin) %>%
+  select(-starts_with("total_similarity"))
+
+## for partial residual plot
+df_dtw_zoom$handshape_res = residuals(lm(handshape ~ movement + orientation + position, data = df_dtw_zoom))
+df_dtw_zoom$movement_res = residuals(lm(movement ~ handshape + orientation + position, data = df_dtw_zoom))
+df_dtw_zoom$orientation_res = residuals(lm(orientation ~ handshape + movement + position, data = df_dtw_zoom))
+df_dtw_zoom$position_res = residuals(lm(position ~ handshape + movement + orientation, data = df_dtw_zoom))
+
+df_dtw_zoom_long_res = df_dtw_zoom %>%
+  pivot_longer(cols = c("handshape_res", "movement_res", "orientation_res", "position_res"), 
+               names_to = "feature", 
+               values_to = "similarity_res") %>% 
+  mutate(feature = factor(sub("_res", "", feature),
+                          levels = c("handshape", "movement", "orientation", "position"))) %>% 
+  select(!dataset:total_similarity_z)
+```
+
+***
+
+## Data visualization
+### correlation for each feature
+```{r}
+scp_feature = df_dtw_zoom_long %>%
+  ggplot(aes(x = similarity, y = average_distance)) +
+  geom_point(size = 0.8, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Similarity score", 
+       y="Normalized DTW distance") +
+  scale_x_continuous(limits = c(0, 5),
+                     breaks = seq(0, 5, 1)) +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = seq(0, 1, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines")) +
+  facet_wrap(~feature, nrow = 2)
+
+# ggplotly(scp_feature)
+```
+
+
+<br>
+
+### partial residual plot
+```{r}
+scp_feature_res = df_dtw_zoom_long_res %>%
+  ggplot(aes(x = similarity_res, y = average_distance)) +
+  geom_point(size = 0.8, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Similarity score (residuals)", 
+       y="Normalized DTW distance") +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = seq(0, 1, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines")) +
+  facet_wrap(~feature, nrow = 2)
+
+scp_feature_res
+```
+
+<br>
+
+### correlation for total similarity score
+```{r}
+scp_total = df_dtw_zoom %>%
+  ggplot(aes(x = total_similarity, y = average_distance)) +
+  geom_point(size = 1, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Total similarity score", 
+       y="Normalized DTW distance") +
+  scale_x_continuous(limits = c(0, 20),
+                     breaks = seq(0, 20, 5)) +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = seq(0, 1, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
+
+# ggExtra::ggMarginal(scp_total, fill = "lightblue")
+# ggplotly(scp_total)
+```
+
+```{r, include = FALSE}
+# ggsave("figures/distance_zoom_total.svg", width=6, height=6, dpi=600)
+```
+
+```{r}
+scp_total = scp_total + 
+  labs(tag = "A") +
+  theme(plot.tag.position = c(0,1),
+        plot.tag = element_text(vjust = 0.5, hjust = 0.3))
+
+scp_feature = scp_feature + 
+  labs(tag = "B") +
+  theme(plot.tag.position = c(0,1),
+        plot.tag = element_text(vjust = 0.5, hjust = 0.3))
+
+### combined plot
+combined_p_zoom = scp_total + scp_feature + plot_layout(widths = c(5, 5))
+combined_p_zoom[[2]] = combined_p_zoom[[2]] + theme(axis.title.y = element_blank())
+combined_p_zoom
+
+ggsave("figures/distance_zoom_combined.svg", width=10, height=5, dpi=600)
+```
+
+<br>
+
+### [z] correlation for each feature
+```{r}
+scp_feature_z = df_dtw_zoom_long %>%
+  ggplot(aes(x = similarity_z, y = average_distance)) +
+  geom_point(size = 0.8, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Standardized similarity score", 
+       y="Normalized DTW distance") +
+  scale_x_continuous(limits = c(-2.5, 2),
+                     breaks = seq(-2.5, 2, 1)) +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = seq(0, 1, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines")) +
+  facet_wrap(~feature, nrow = 2)
+
+# scp_feature_z
+```
+
+<br>
+
+### [z] correlation for total similarity score
+```{r}
+scp_total_z = df_dtw_zoom %>%
+  ggplot(aes(x = total_similarity_z, y = average_distance)) +
+  geom_point(size = 1, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Standardized total similarity score (z)", 
+       y="Normalized DTW distance") +
+  scale_x_continuous(limits = c(-2.2, 1.5),
+                     breaks = seq(-2, 1.5, 0.5)) +
+  scale_y_continuous(limits = c(0, 1),
+                     breaks = seq(0, 1, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
+
+# ggExtra::ggMarginal(scp_total_z, fill = "lightblue")
+# scp_total_z
+```
+
+```{r, include = FALSE}
+# ggsave("figures/distance_zoom_total_z.svg", width=6, height=6, dpi=600)
+```
+
+```{r}
+scp_total_z = scp_total_z + 
+  labs(tag = "A") +
+  theme(plot.tag.position = c(0,1),
+        plot.tag = element_text(vjust = 0.5, hjust = 0.3))
+
+scp_feature_z = scp_feature_z + 
+  labs(tag = "B") +
+  theme(plot.tag.position = c(0,1),
+        plot.tag = element_text(vjust = 0.5, hjust = 0.3))
+
+### combined plot
+combined_p_zoom_z = scp_total_z + scp_feature_z + plot_layout(widths = c(5, 5))
+combined_p_zoom_z[[2]] = combined_p_zoom_z[[2]] + theme(axis.title.y = element_blank())
+combined_p_zoom_z
+
+ggsave("figures/distance_zoom_combined_z.svg", width=10, height=5, dpi=600)
+```
+
+<br>
+
+## Statistical analysis
+### Check the normality assumption of errors
+Linear mixed-effects models assume that the residuals are normally distributed. Let's check this assumption by plotting the residuals of the models. For this, we will use the `check_model()` function from the `performance` package.
+```{r, fig.height=10}
+model = lmer(average_distance ~ 1 + (1|pair) + (1|target), 
+             data = subset(df_dtw_zoom))
+check_model(model)
+
+model_log = lmer(log(average_distance) ~ 1 + (1|pair) + (1|target), 
+                 data = subset(df_dtw_zoom))
+check_model(model_log)
+```
+
+Log-normal model returned a sigular fit (i.e., the model is not able to estimate the variance of the random effects for pair). Therefore, we will use linear regression for the analysis.
+
+<br>
+
+### Correlation for total similarity
+```{r}
+x = df_dtw_zoom$total_similarity
+y = df_dtw_zoom$average_distance
+
+cor.test(x, y, method="pearson")
+# cor.test(x, y, method="spearman")
+```
+
+The correlation between the total similarity score and the normalized DTW distance is significant, suggesting that the more similar features two gestures have, the smaller the distance is.
+
+<br>
+
+### LMM for total similarity score
+```{r}
+lmer_zoom_total = lmer(average_distance ~ 
+                           total_similarity_z +
+                           (1|pair) + (1|target),
+                         data = df_dtw_zoom)
+
+summ(lmer_zoom_total, digits = 3)
+```
+
+```{r, fig.height=10, fig.width=10}
+check_model(lmer_zoom_total)
+```
+
+<br>
+
+
+### Correlation for each feature
+```{r}
+print("Handshape")
+cor.test(df_dtw_zoom$handshape, df_dtw_zoom$average_distance, method="spearman")
+
+print("Orientation")
+cor.test(df_dtw_zoom$orientation, df_dtw_zoom$average_distance, method="spearman")
+
+print("Movement")
+cor.test(df_dtw_zoom$movement, df_dtw_zoom$average_distance, method="spearman")
+
+print("Position")
+cor.test(df_dtw_zoom$position, df_dtw_zoom$average_distance, method="spearman")
+```
+
+<br>
+
+### LMM for each feature
+```{r}
+### each feature
+lmer_zoom_shape = lmer(average_distance ~ 
+                 handshape_z + (1|pair) + (1|target),
+               data = df_dtw_zoom)
+summ(lmer_zoom_shape, digits = 3)
+
+lmer_zoom_movement = lmer(average_distance ~ 
+                             movement_z + (1|pair) + (1|target),
+                           data = df_dtw_zoom)
+summ(lmer_zoom_movement, digits = 3)
+
+lmer_zoom_orientation = lmer(average_distance ~ 
+                                orientation_z + (1|pair) + (1|target),
+                              data = df_dtw_zoom)
+summ(lmer_zoom_orientation, digits = 3)
+
+lmer_zoom_position = lmer(average_distance ~ 
+                              position_z + (1|pair) + (1|target),
+                            data = df_dtw_zoom)
+summ(lmer_zoom_position, digits = 3)
+
+
+### all features
+lmer_zoom_feature = lmer(average_distance ~ 
+                            handshape_z + movement_z + orientation_z + position_z +
+                            (1|pair) + (1|target),
+                          data = df_dtw_zoom)
+
+summ(lmer_zoom_feature, digits = 3)
+cov2cor(vcov(lmer_zoom_feature))
+```
+
+Regressions on each feature show a significant negative association between DTW distance and movement, orientation, and position (handshape didn't reach significance). However, the model with all features as fixed effects shows such significant negative correlation only for position.
+
+To check why the effects "disappeared", we examined the correlation of fixed effects and found a strong negative correlation between handshape and orientation (-0.6) and between movement and position (-0.47). This suggests that when the slope estimate for orientation is more extremely negative, the slope estimate for handshape becomes flatter (or more positive). This is likely due to the fact that handshape and orientation are both reflected in relative finger tip positions. Similar relationship was found for movement and position, which is likely due to the fact that they are both reflected in the wrist positions. 
+
+Again, this suggests a need for developing a different approach to capturing handshape similarity independently of hand orientation.
+
+<br>
+
+# 2.2 Revised DTW pipeline for Zoom dataset
+A qualitative check on incongruent cases where a pair of gestures was annotated as similar but it's DTW distance was large revealed that the majority of such cases is because of mirrored movements. To tackle this issue, for gestures where speaker A and B used the opposing hands (e.g., speaker used left-hand and speaker B right-hand), we will calculate DTW distance for both original and flipped videos and take the minimum of the two. 
+
+## Data preparation
+```{r, message=FALSE, warning=FALSE}
+### Load data
+df_dtw_zoom_v2 = read_csv("data/dtw_distance_zoom_mirrored.csv") %>% 
+  rename(target = target_2) %>%
+  select(comparison_id, pair, target, average_distance, average_distance, hands_dtw) %>%
+  mutate(dataset = "zoom",
+         pair = as.factor(pair),
+         target = as.factor(target))
+
+df_sim_coding_zoom = read_csv("data/similarity_coding_zoom.csv") %>% 
+  rename(position = location) %>% 
+  mutate(total_similarity = handshape + movement + orientation + position,
+         ### binary coding
+         handshape_bin = ifelse(handshape >= 4, 1, 0),
+         movement_bin = ifelse(movement >= 4, 1, 0),
+         orientation_bin = ifelse(orientation >= 4, 1, 0),
+         position_bin = ifelse(position >= 4, 1, 0),
+         n_features = handshape_bin + movement_bin + orientation_bin + position_bin,
+         handshape_bin = factor(handshape_bin, 
+                                levels = c(0, 1), 
+                                labels = c("not similar", "similar")),
+         movement_bin = factor(movement_bin,
+                                levels = c(0, 1), 
+                                labels = c("not similar", "similar")),
+         orientation_bin = factor(orientation_bin,
+                                   levels = c(0, 1), 
+                                   labels = c("not similar", "similar")),
+         position_bin = factor(position_bin,
+                                levels = c(0, 1), 
+                                labels = c("not similar", "similar")),
+         ### z-score
+         handshape_z = scale(handshape)[,1],
+         movement_z = scale(movement)[,1],
+         orientation_z = scale(orientation)[,1],
+         position_z = scale(position)[,1],
+         total_similarity_z = scale(total_similarity)[,1]) %>% 
+  select(-notes)
+
+### combine dtw and coding data for zoom dataset
+df_dtw_zoom_v2 = right_join(df_dtw_zoom_v2, df_sim_coding_zoom)
+
+### convert to long format for data visualization
+df_dtw_zoom_v2_long = df_dtw_zoom_v2 %>%
+  pivot_longer(cols = c("handshape", "movement", "orientation", "position"), 
+               names_to = "feature", 
+               values_to = "similarity") %>% 
+  select(-ends_with("_z"), -ends_with("_bin"))
+
+df_dtw_zoom_v2_long_bin = df_dtw_zoom_v2 %>%
+  pivot_longer(cols = c("handshape_bin", "movement_bin", "orientation_bin", "position_bin"), 
+               names_to = "feature", 
+               values_to = "similarity_bin") %>% 
+  mutate(feature = factor(sub("_bin", "", feature),
+                          levels = c("handshape", "movement", "orientation", "position"))) %>% 
+  select(-handshape, -movement, -orientation, -position, -ends_with("_z"))
+
+df_dtw_zoom_v2_long_z = df_dtw_zoom_v2 %>%
+  pivot_longer(cols = c("handshape_z", "movement_z", "orientation_z", "position_z"), 
+               names_to = "feature", 
+               values_to = "similarity_z") %>% 
+  mutate(feature = factor(sub("_z", "", feature),
+                          levels = c("handshape", "movement", "orientation", "position"))) %>% 
+  select(-handshape, -movement, -orientation, -position, -ends_with("_bin"))
+
+df_dtw_zoom_v2_long = left_join(df_dtw_zoom_v2_long, df_dtw_zoom_v2_long_z) %>% 
+  left_join(., df_dtw_zoom_v2_long_bin) %>%
+  select(-starts_with("total_similarity"))
+
+## for partial residual plot
+df_dtw_zoom_v2$handshape_res = residuals(lm(handshape ~ movement + orientation + position, data = df_dtw_zoom_v2))
+df_dtw_zoom_v2$movement_res = residuals(lm(movement ~ handshape + orientation + position, data = df_dtw_zoom_v2))
+df_dtw_zoom_v2$orientation_res = residuals(lm(orientation ~ handshape + movement + position, data = df_dtw_zoom_v2))
+df_dtw_zoom_v2$position_res = residuals(lm(position ~ handshape + movement + orientation, data = df_dtw_zoom_v2))
+
+df_dtw_zoom_v2_long_res = df_dtw_zoom_v2 %>%
+  pivot_longer(cols = c("handshape_res", "movement_res", "orientation_res", "position_res"), 
+               names_to = "feature", 
+               values_to = "similarity_res") %>% 
+  mutate(feature = factor(sub("_res", "", feature),
+                          levels = c("handshape", "movement", "orientation", "position"))) %>% 
+  select(!dataset:total_similarity_z)
+```
+
+<br>
+
+## Data visualization
+### correlation for each feature
+```{r}
+scp_feature = df_dtw_zoom_v2_long %>%
+  ggplot(aes(x = similarity, y = average_distance)) +
+  geom_point(size = 0.8, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Similarity score", 
+       y="Normalized DTW distance") +
+  scale_x_continuous(limits = c(0, 5),
+                     breaks = seq(0, 5, 1)) +
+  scale_y_continuous(limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines")) +
+  facet_wrap(~feature, nrow = 2)
+
+# ggplotly(scp_feature)
+```
+
+<br>
+
+### partial residual plot
+```{r}
+scp_feature_res = df_dtw_zoom_v2_long_res %>%
+  ggplot(aes(x = similarity_res, y = average_distance)) +
+  geom_point(size = 0.8, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Similarity score (residuals)", 
+       y="Normalized DTW distance") +
+  scale_y_continuous(limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines")) +
+  facet_wrap(~feature, nrow = 2)
+
+scp_feature_res
+```
+
+<br>
+
+### correlation for total similarity score
+```{r}
+scp_total = df_dtw_zoom_v2 %>%
+  ggplot(aes(x = total_similarity, y = average_distance)) +
+  geom_point(size = 1, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Total similarity score", 
+       y="Normalized DTW distance") +
+  scale_x_continuous(limits = c(0, 20),
+                     breaks = seq(0, 20, 5)) +
+  scale_y_continuous(limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
+
+# ggExtra::ggMarginal(scp_total, fill = "lightblue")
+# scp_total
+
+# ggplotly(scp_total)
+```
+
+```{r, include = FALSE}
+# ggsave("figures/distance_zoom_v2_total.svg", width=8, height=6, dpi=600)
+```
+
+```{r}
+scp_total = scp_total + 
+  labs(tag = "A") +
+  theme(plot.tag.position = c(0,1),
+        plot.tag = element_text(vjust = 0.5, hjust = 0.3))
+
+scp_feature = scp_feature + 
+  labs(tag = "B") +
+  theme(plot.tag.position = c(0,1),
+        plot.tag = element_text(vjust = 0.5, hjust = 0.3))
+
+### combined plot
+combined_p_zoom = scp_total + scp_feature + plot_layout(widths = c(5, 5))
+combined_p_zoom[[2]] = combined_p_zoom[[2]] + theme(axis.title.y = element_blank())
+combined_p_zoom
+
+ggsave("figures/distance_zoom_v2_combined.svg", width=10, height=5, dpi=600)
+```
+
+<br>
+
+### [z] correlation for each feature
+```{r}
+scp_feature_z = df_dtw_zoom_v2_long %>%
+  ggplot(aes(x = similarity_z, y = average_distance)) +
+  geom_point(size = 0.8, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Standardized similarity score", 
+       y="Normalized DTW distance") +
+  scale_x_continuous(limits = c(-2.5, 2),
+                     breaks = seq(-2.5, 2, 1)) +
+  scale_y_continuous(limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines")) +
+  facet_wrap(~feature, nrow = 2)
+
+# scp_feature_z
+```
+
+<br>
+
+### [z] correlation for total similarity score
+```{r}
+scp_total_z = df_dtw_zoom_v2 %>%
+  ggplot(aes(x = total_similarity_z, y = average_distance)) +
+  geom_point(size = 1, alpha = 0.7) +
+  geom_smooth(method = "lm") +
+  stat_cor(p.accuracy = 0.001, r.accuracy = 0.01, 
+           method="pearson") +
+  labs(x="Standardized total similarity score (z)", 
+       y="Normalized DTW distance") +
+  scale_x_continuous(limits = c(-2.2, 1.5),
+                     breaks = seq(-2, 1.5, 0.5)) +
+  scale_y_continuous(limits = c(0, 0.8),
+                     breaks = seq(0, 0.8, 0.2)) +
+  theme_classic(base_size = 14) +
+  theme(axis.text.x = element_text(colour = "black", size = 13),
+        axis.text.y = element_text(colour = "black", size = 13),
+        axis.title = element_text(face = 'bold'),
+        axis.title.x = element_text(vjust = -2),
+        axis.title.y = element_text(vjust = 2),
+        strip.text = element_text(face = 'bold'),
+        legend.position = "none",
+        plot.margin = unit(c(1.1,1.1,1.1,1.1), "lines"))
+
+# ggExtra::ggMarginal(scp_total_z, fill = "lightblue")
+# scp_total_z
+```
+
+```{r, include = FALSE}
+# ggsave("figures/distance_zoom_v2_total_z.svg", width=6, height=6, dpi=600)
+```
+
+
+```{r}
+scp_total_z = scp_total_z + 
+  labs(tag = "A") +
+  theme(plot.tag.position = c(0,1),
+        plot.tag = element_text(vjust = 0.5, hjust = 0.3))
+
+scp_feature_z = scp_feature_z + 
+  labs(tag = "B") +
+  theme(plot.tag.position = c(0,1),
+        plot.tag = element_text(vjust = 0.5, hjust = 0.3))
+
+### combined plot
+combined_p_zoom_z = scp_total_z + scp_feature_z + plot_layout(widths = c(5, 5))
+combined_p_zoom_z[[2]] = combined_p_zoom_z[[2]] + theme(axis.title.y = element_blank())
+combined_p_zoom_z
+
+ggsave("figures/distance_zoom_v2_combined_z.svg", width=10, height=5, dpi=600)
+```
+
+<br>
+
+## Statistical analysis
+### Check the normality assumption of errors
+Linear mixed-effects models assume that the residuals are normally distributed. Let's check this assumption by plotting the residuals of the models. For this, we will use the `check_model()` function from the `performance` package.
+```{r, fig.height=10}
+model = lmer(average_distance ~ 1 + (1|pair), 
+             data = subset(df_dtw_zoom_v2))
+check_model(model)
+
+model_log = lmer(log(average_distance) ~ 1 + (1|pair), 
+                 data = subset(df_dtw_zoom_v2))
+check_model(model_log)
+```
+
+Models including random intercepts for dyads and items returned a singular fit, most likely because of the small sample size. After removing the by-item random intercept, the model converged only for the linear model. Therefore, we will use linear regression for the analysis.
+
+<br>
+
+### Correlation for total similarity
+```{r}
+x = df_dtw_zoom_v2$total_similarity
+y = df_dtw_zoom_v2$average_distance
+
+cor.test(x, y, method="pearson")
+cor.test(x, y, method="spearman")
+```
+
+The correlation between the total similarity score and the normalized DTW distance improved after accounting for the mirrored gestures.
+
+<br>
+
+### LMM for total similarity score
+```{r}
+lmer_zoom_total = lmer(average_distance ~ 
+                           total_similarity_z +
+                           (1|pair),
+                         data = df_dtw_zoom_v2)
+
+summ(lmer_zoom_total, digits = 3)
+```
+
+```{r, fig.height=10, fig.width=10}
+check_model(lmer_zoom_total)
+```
+
+<br>
+
+
+### Correlation for each feature
+```{r}
+print("Handshape")
+cor.test(df_dtw_zoom_v2$handshape, df_dtw_zoom_v2$average_distance, method="spearman")
+
+print("Orientation")
+cor.test(df_dtw_zoom_v2$orientation, df_dtw_zoom_v2$average_distance, method="spearman")
+
+print("Movement")
+cor.test(df_dtw_zoom_v2$movement, df_dtw_zoom_v2$average_distance, method="spearman")
+
+print("Position")
+cor.test(df_dtw_zoom_v2$position, df_dtw_zoom_v2$average_distance, method="spearman")
+```
+
+<br>
+
+### LMM for each feature
+```{r}
+### each feature
+lmer_zoom_shape = lmer(average_distance ~ 
+                 handshape_z + (1|pair),
+               data = df_dtw_zoom_v2)
+summ(lmer_zoom_shape, digits = 3)
+
+lmer_zoom_movement = lmer(average_distance ~ 
+                             movement_z + (1|pair),
+                           data = df_dtw_zoom_v2)
+summ(lmer_zoom_movement, digits = 3)
+
+lmer_zoom_orientation = lmer(average_distance ~ 
+                                orientation_z + (1|pair),
+                              data = df_dtw_zoom_v2)
+summ(lmer_zoom_orientation, digits = 3)
+
+lmer_zoom_position = lmer(average_distance ~ 
+                              position_z + (1|pair),
+                            data = df_dtw_zoom_v2)
+summ(lmer_zoom_position, digits = 3)
+
+
+### all features
+lmer_zoom_feature = lmer(average_distance ~ 
+                            handshape_z + movement_z + orientation_z + position_z +
+                            (1|pair),
+                          data = df_dtw_zoom_v2)
+
+summ(lmer_zoom_feature, digits = 3)
+cov2cor(vcov(lmer_zoom_feature))
+```
+
+Regressions on each feature show a significant negative association between DTW distance for all features. However, the model with all features as fixed effects shows such significant negative correlation only for position.
+
+To check why the effects "disappeared", we examined the correlation of fixed effects and found a strong negative correlation between handshape and orientation (-0.6) and between movement and position (-0.45). This suggests that when the slope estimate for orientation is more extremely negative, the slope estimate for handshape becomes flatter (or more positive). This is likely due to the fact that handshape and orientation are both reflected in relative finger tip positions. Similar relationship was found for movement and position, which is likely due to the fact that they are both reflected in the wrist positions. 
+
+<br>
+
+
+==============================================================
+
+# 3. Session Info
+```{r}
+sessionInfo()
+```
+
+
+
+
+
+

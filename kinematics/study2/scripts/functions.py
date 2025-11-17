@@ -5,6 +5,7 @@ import os                                    # for foldering
 import glob                                  # for file handling    
 from tqdm import tqdm                        # for progress bars
 from scipy.ndimage import gaussian_filter1d  # for smoothing
+from scipy.spatial import distance           # for calculating distances
 from dtw_functions import get_keypoints
 
 
@@ -120,16 +121,15 @@ def normalize_position(df, ref_point = "mid-torso"):
 def preprocess_ts(file, body_cols_to_keep, merged_folder, interpolated_folder, norm_smooth_folder, flipped = False):
     filename = file.split("/")[-1]
 
-    # # Merge body and hands time series
-    # merged_df = merge_ts(file, body_cols_to_keep)
+    # Merge body and hands time series
+    merged_df = merge_ts(file, body_cols_to_keep)
     merged_file = merged_folder + filename + "_merged.csv" if not flipped else merged_folder + "flipped/" + filename + "_merged.csv"
-    # merged_df.to_csv(merged_file, index=False)
-    merged_df = pd.read_csv(merged_file)
+    merged_df.to_csv(merged_file, index=False)
 
     # Interpolate missing values
     interpolated_df = fill_missing_values(merged_df)
     interpolated_file = interpolated_folder + filename + "_interpolated.csv" if not flipped else interpolated_folder + "flipped/" + filename + "_interpolated.csv"
-    interpolated_df.to_csv(interpolated_file, index=False)
+    # interpolated_df.to_csv(interpolated_file, index=False)
 
     # Apply smoothing
     xyz_cols = [col for col in interpolated_df.columns if col.startswith("X_") or col.startswith("Y_") or col.startswith("Z_")]
@@ -145,6 +145,15 @@ def preprocess_ts(file, body_cols_to_keep, merged_folder, interpolated_folder, n
 
     # Flip y-axis
     normalized_df = flip_y_axis(normalized_df)
+
+    # calculate relative finger positions
+    normalized_df = calculate_relative_position(normalized_df, get_keypoints())
+    normalized_df = change_wrist_col_name(normalized_df)
+
+    # drop unnecessary columns
+    xyz_cols = [col for col in normalized_df.columns if col.startswith("x_") or col.startswith("y_") or col.startswith("z_")]
+    normalized_df = normalized_df[xyz_cols]
+    normalized_df.insert(0, 'time', interpolated_df["time"])
 
     # Save normalized and smoothed time series
     norm_smooth_file = norm_smooth_folder + filename + "_ns.csv" if not flipped else norm_smooth_folder + "flipped/" + filename + "_ns.csv"
@@ -230,10 +239,14 @@ def export_merge_annot(MT_files, anno, ts_annot_folder, adj_dur=False):
             continue
 
         # print("Now processing: " + mt_file + " for speaker " + speaker + "...")
-        mdata = pd.read_csv(mt_file)
+        try:
+            mdata = pd.read_csv(mt_file)
+        except:
+            # use engine='python' to avoid parser error
+            mdata = pd.read_csv(mt_file, engine='python')
         adata = anno[anno['pair'] == pair_n].reset_index(drop=True)
-        mdata = calculate_relative_position(mdata, keypoints)
-        change_wrist_col_name(mdata)
+        # mdata = calculate_relative_position(mdata, keypoints)
+        # change_wrist_col_name(mdata)
         merged_data = mdata.copy()
 
         cols = ["comparison_id"]
@@ -266,3 +279,141 @@ def export_merge_annot(MT_files, anno, ts_annot_folder, adj_dur=False):
         print(f"{skip_count} files skipped because they already exist")
         print(f"Files skipped: {skip_files}")
 
+
+
+def export_merge_annot_size(MT_files, anno, ts_annot_folder):
+    # merged_data_list = []
+    keypoints = get_keypoints()
+    merged_data = pd.DataFrame()  # Initialize an empty DataFrame
+
+    n_gestures = len(anno)
+    print("Number of gestures: " + str(n_gestures))
+
+    skip_count = 0
+    skip_files = []
+
+    for mt_file in tqdm(MT_files):
+        fname = os.path.basename(mt_file).split('_ns')[0]
+        # check if the processed file already exists
+        if glob.glob(ts_annot_folder + fname + "*.csv"):
+            skip_count += 1
+            skip_files.append(fname)
+            continue # Skip the file if it already exists. 
+
+        speaker = fname.split('_')[1].upper() # Extract the speaker from the file name
+        pair_n = int(fname.split('_')[0]) # Extract the pair number from the file name and convert it to an integer
+        # anno["pairnr"] = anno["pair"].str[-2:].astype(int)
+        # if pair_n not in anno['pairnr'].values:
+        if pair_n not in anno['pair'].values:
+            print("Pair number " + str(pair_n) + " not found in the annotation file.")
+            continue
+
+        # print("Now processing: " + mt_file + " for speaker " + speaker + "...")
+        try:
+            mdata = pd.read_csv(mt_file)
+        except:
+            # use engine='python' to avoid parser error
+            mdata = pd.read_csv(mt_file, engine='python')
+        adata = anno[anno['pair'] == pair_n].reset_index(drop=True)
+        mdata = calculate_relative_position(mdata, keypoints)
+        change_wrist_col_name(mdata)
+        merged_data = mdata.copy()
+
+        cols = ["comparison_id"]
+
+        for i in range(len(adata)):
+            gesturer = adata.loc[i, 'gesturer']
+            if speaker != gesturer:
+                continue
+
+            comparison_id = adata.loc[i, 'comparison_id']
+            hands = adata.loc[i, 'A_hands'] if gesturer == 'A' else adata.loc[i, 'B_hands']
+            # Initialize a pandas dataframe and a dictionary to hold new columns (this approach is faster than appending to a DataFrame in a loop)
+            new_cols_df = pd.DataFrame()
+            new_cols = {}
+            # Add the new column to the dictionary
+            new_cols['File'] = [fname] * len(merged_data)
+            new_cols['Speaker'] = [speaker] * len(merged_data)
+
+            # Apply the function to each column and store the result in the dictionary
+            for col in cols:
+                time_original = merged_data['time']
+                output = np.full(len(time_original), np.nan, dtype=object)  # Initialize output array with NaN values
+                output[(time_original >= adata.loc[i, 'begin_time']) & (time_original <= adata.loc[i, 'end_time'])] = adata.iloc[i, adata.columns.get_loc(col)]
+                new_cols[col] = output
+
+            # Create a new DataFrame from the dictionary
+            new_cols_df = pd.DataFrame(new_cols)
+            # Concatenate the original DataFrame with the new DataFrame
+            final_merged_data = pd.concat([merged_data, new_cols_df], axis=1)
+            final_merged_data = final_merged_data[final_merged_data['comparison_id'].notna()]
+            # drop unnecesary columns and export the merged data to a csv file
+            cols_to_drop = [col for col in final_merged_data.columns if "X" in col or "Y" in col or "Z" in col]
+            final_merged_data.drop(columns=cols_to_drop, inplace=True)
+            final_merged_data.to_csv(ts_annot_folder + fname + "_" + str(comparison_id) + "_" + hands + ".csv", index=False)
+            
+    if skip_count > 0:
+        print(f"{skip_count} files skipped because they already exist")
+        print(f"Files skipped: {skip_files}")
+
+
+def make_export_size_df(output_folder, ts_annot_folder, keypoints, aligned=False):
+    output_filename = "gesture_size.csv" if not aligned else "aligned_gesture_size.csv"
+    # make an empty dataframe to store the results
+    df_size = pd.DataFrame(columns=["pair", "comparison_id", "hands",
+                                    "average_size", "size_left", "size_right"])
+
+    # specify columns we want to keep in the timeseries dataframe (before merging with annotations)
+    cols_to_keep = ["File", "Speaker", "comparison_id", "time"]
+    cols_to_keep.extend(keypoints)
+
+    error_count = 0
+    error_files = []
+
+    if os.path.exists(output_folder + output_filename):
+        print(f"The file {output_folder + output_filename} already exists. Skipping the export.")
+        
+    else:
+        ts_annot_folder_files = [file for file in os.listdir(ts_annot_folder) if file.endswith(".csv")]
+        for filename in tqdm(ts_annot_folder_files):
+            pair = filename.split("_")[0]
+            comparison_id = filename.split("_")[2]
+            hands = filename.split("_")[3].split(".")[0]
+            size_array = np.array([pair, comparison_id, hands])
+
+            MT = pd.read_csv(ts_annot_folder + filename)
+                
+            try:
+                ### retrieve the min and max for the wrists
+                min_left = (MT["x_left_wrist"].min(), MT["y_left_wrist"].min(), MT["z_left_wrist"].min())
+                max_left = (MT["x_left_wrist"].max(), MT["y_left_wrist"].max(), MT["z_left_wrist"].max())
+                min_right = (MT["x_right_wrist"].min(), MT["y_right_wrist"].min(), MT["z_right_wrist"].min())
+                max_right = (MT["x_right_wrist"].max(), MT["y_right_wrist"].max(), MT["z_right_wrist"].max())
+                
+                ### calculate the Euclidean distance for each hand
+                left_size = distance.euclidean(min_left, max_left)
+                right_size = distance.euclidean(min_right, max_right)
+                average_size = (left_size + right_size) / 2 if hands == "both" else left_size if hands == "left" else right_size
+
+                size_array = [pair, comparison_id, hands, average_size, left_size, right_size]
+                
+                ### append the size_array to the df_size dataframe
+                df_size = pd.concat([df_size, pd.DataFrame([size_array], columns=df_size.columns)])
+
+            except:
+                error_count += 1
+                error_files.append(filename)
+                pass # do nothing and continue to the next line
+
+
+        # sort the dataframe by comparison_id
+        df_size["comparison_id"] = df_size["comparison_id"].astype(int)
+        df_size = df_size.sort_values(by=["comparison_id"])
+
+        # save the dataframe to a csv file
+        df_size.to_csv(output_folder + output_filename, index=False)
+
+        # check the shape of the dataframe
+        print(f"The follwing {error_count} files were skipped. The files might contain missing values for the keypoints or have too few datapoints.")
+        print(error_files)
+        print(df_size.shape)

@@ -40,7 +40,11 @@ def dtw_distance_normalized(ts1, ts2):
     ts2 = np.array(ts2)
     
     #now calculate a multidimesnional (dependent) dtw distance using dtwParallel Multivariate = true, type dtw = dependent, distance is euclidean, compare the two timeseries only locally (sakoe_chiba)
-    res = dtw(ts1, ts2, step_pattern = "symmetric2")
+    # res = dtw(ts1, ts2, step_pattern = "symmetric2")
+    res = dtw(ts1, ts2, 
+                step_pattern = "asymmetric",
+                open_begin = True, 
+                open_end = True)
     normalized_distance = res.normalizedDistance
     
     return normalized_distance
