@@ -6,13 +6,13 @@ output:
     theme: cosmo
     toc: true
     toc_depth: 4
-    toc_float:
-      collapsed: true
-    number_sections: true
+    toc_float: true
+      # collapsed: true
+    # number_sections: true
     df_print: paged
     code-tools: true
     code-fold: true
-    code_folding: hide #hide the code section initially
+    # code_folding: hide #hide the code section initially
   github_document:
 editor_options: 
   markdown: 
@@ -52,11 +52,13 @@ In the manuscript, we reported that accounting for mirrored gestures greatly imp
 Let's run some simulations to understand the effect of beta and variance on correlation. In the simulation, we will use the values from our mixed-effects models:
 
 [Study 2 without mirroring]
+
 - `mean distance` = 0.33
 - `effect_size_s` (beta) = -0.038
 - `sd_l` (sigma) = 0.15
 
 [modified approach]
+
 - `mean distance` = 0.29
 - `effect_size_s` (beta) = -0.046
 - `sd_l` (sigma) = 0.122

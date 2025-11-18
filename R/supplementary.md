@@ -16,11 +16,17 @@ Let’s run some simulations to understand the effect of beta and variance
 on correlation. In the simulation, we will use the values from our
 mixed-effects models:
 
-\[Study 2 without mirroring\] - `mean distance` = 0.33 - `effect_size_s`
-(beta) = -0.038 - `sd_l` (sigma) = 0.15
+\[Study 2 without mirroring\]
 
-\[modified approach\] - `mean distance` = 0.29 - `effect_size_s` (beta)
-= -0.046 - `sd_l` (sigma) = 0.122
+- `mean distance` = 0.33
+- `effect_size_s` (beta) = -0.038
+- `sd_l` (sigma) = 0.15
+
+\[modified approach\]
+
+- `mean distance` = 0.29
+- `effect_size_s` (beta) = -0.046
+- `sd_l` (sigma) = 0.122
 
 ``` r
 set.seed(123)

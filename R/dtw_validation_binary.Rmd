@@ -1,22 +1,22 @@
 ---
 title: "DTW validation analysis"
-date: 'Last updated: `r Sys.Date()`'
+date: "Last updated: `r Sys.Date()`"
 output:
   html_document:
     theme: cosmo
     toc: true
     toc_depth: 4
-    toc_float:
-      collapsed: true
-    number_sections: true
+    toc_float: true
+      # collapsed: true
+    # number_sections: true
     df_print: paged
     code-tools: true
     code-fold: true
-    code_folding: hide #hide the code section initially
+    # code_folding: hide #hide the code section initially
   github_document:
-editor_options:
-  markdown:
-    wrap: sentence
+editor_options: 
+  markdown: 
+    wrap: sentence #Wrap texts in code cells
 ---
 
 ```{r setup, include=FALSE}
