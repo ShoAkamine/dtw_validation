@@ -1,6 +1,6 @@
 DTW validation analysis
 ================
-Last updated: 2025-11-18
+Last updated: 2025-11-19
 
 # Data preparation
 
@@ -3376,10 +3376,10 @@ cor.test(x, y, method="pearson")
     ## t = -4, df = 98, p-value = 0.0003
     ## alternative hypothesis: true correlation is not equal to 0
     ## 95 percent confidence interval:
-    ##  -0.514 -0.168
+    ##  -0.517 -0.172
     ## sample estimates:
     ##    cor 
-    ## -0.353
+    ## -0.356
 
 ``` r
 cor.test(x, y, method="spearman")
@@ -3389,11 +3389,11 @@ cor.test(x, y, method="spearman")
     ##  Spearman's rank correlation rho
     ## 
     ## data:  x and y
-    ## S = 236176, p-value = 0.00002
+    ## S = 236345, p-value = 0.00001
     ## alternative hypothesis: true rho is not equal to 0
     ## sample estimates:
     ##    rho 
-    ## -0.417
+    ## -0.418
 
 The correlation between the total similarity score and the normalized
 DTW distance is significant, suggesting that the more similar features
@@ -3477,7 +3477,7 @@ AIC
 
 <td style="text-align:right;">
 
--71.9582
+-143.6941
 </td>
 
 </tr>
@@ -3491,7 +3491,7 @@ BIC
 
 <td style="text-align:right;">
 
--58.9324
+-130.6682
 </td>
 
 </tr>
@@ -3505,7 +3505,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.1251
+0.1273
 </td>
 
 </tr>
@@ -3519,7 +3519,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.1438
+0.1460
 </td>
 
 </tr>
@@ -3592,22 +3592,22 @@ p
 
 <td style="text-align:right;">
 
-0.3947
+0.2847
 </td>
 
 <td style="text-align:right;">
 
-0.0237
+0.0165
 </td>
 
 <td style="text-align:right;">
 
-16.6356
+17.3019
 </td>
 
 <td style="text-align:right;">
 
-50.8102
+50.8095
 </td>
 
 <td style="text-align:right;">
@@ -3626,22 +3626,22 @@ n_features
 
 <td style="text-align:right;">
 
--0.0381
+-0.0267
 </td>
 
 <td style="text-align:right;">
 
-0.0101
+0.0070
 </td>
 
 <td style="text-align:right;">
 
--3.7623
+-3.7990
 </td>
 
 <td style="text-align:right;">
 
-97.9138
+97.9152
 </td>
 
 <td style="text-align:right;">
@@ -3742,7 +3742,7 @@ target
 
 <td>
 
-0.0221
+0.0154
 </td>
 
 </tr>
@@ -3760,7 +3760,7 @@ Residual
 
 <td>
 
-0.1499
+0.1040
 </td>
 
 </tr>
@@ -3843,7 +3843,7 @@ target
 
 <td>
 
-0.0214
+0.0215
 </td>
 
 </tr>
@@ -3933,7 +3933,7 @@ AIC
 
 <td style="text-align:right;">
 
--63.364
+-134.994
 </td>
 
 </tr>
@@ -3947,7 +3947,7 @@ BIC
 
 <td style="text-align:right;">
 
--50.338
+-121.968
 </td>
 
 </tr>
@@ -3961,7 +3961,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.024
+0.025
 </td>
 
 </tr>
@@ -3975,7 +3975,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.036
+0.037
 </td>
 
 </tr>
@@ -4048,22 +4048,22 @@ p
 
 <td style="text-align:right;">
 
-0.325
+0.236
 </td>
 
 <td style="text-align:right;">
 
-0.017
+0.012
 </td>
 
 <td style="text-align:right;">
 
-19.260
+20.153
 </td>
 
 <td style="text-align:right;">
 
-18.455
+18.533
 </td>
 
 <td style="text-align:right;">
@@ -4082,27 +4082,27 @@ handshape_bin1
 
 <td style="text-align:right;">
 
--0.050
+-0.036
 </td>
 
 <td style="text-align:right;">
 
-0.033
+0.023
 </td>
 
 <td style="text-align:right;">
 
--1.552
+-1.597
 </td>
 
 <td style="text-align:right;">
 
-97.940
+97.941
 </td>
 
 <td style="text-align:right;">
 
-0.124
+0.114
 </td>
 
 </tr>
@@ -4198,7 +4198,7 @@ target
 
 <td>
 
-0.018
+0.012
 </td>
 
 </tr>
@@ -4216,7 +4216,7 @@ Residual
 
 <td>
 
-0.159
+0.110
 </td>
 
 </tr>
@@ -4378,7 +4378,7 @@ AIC
 
 <td style="text-align:right;">
 
--68.685
+-139.956
 </td>
 
 </tr>
@@ -4392,7 +4392,7 @@ BIC
 
 <td style="text-align:right;">
 
--55.659
+-126.930
 </td>
 
 </tr>
@@ -4406,7 +4406,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.075
+0.073
 </td>
 
 </tr>
@@ -4420,7 +4420,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.087
+0.085
 </td>
 
 </tr>
@@ -4493,22 +4493,22 @@ p
 
 <td style="text-align:right;">
 
-0.321
+0.233
 </td>
 
 <td style="text-align:right;">
 
-0.017
+0.011
 </td>
 
 <td style="text-align:right;">
 
-19.388
+20.299
 </td>
 
 <td style="text-align:right;">
 
-17.646
+17.634
 </td>
 
 <td style="text-align:right;">
@@ -4527,22 +4527,22 @@ movement_bin1
 
 <td style="text-align:right;">
 
--0.090
+-0.062
 </td>
 
 <td style="text-align:right;">
 
-0.032
+0.022
 </td>
 
 <td style="text-align:right;">
 
--2.829
+-2.786
 </td>
 
 <td style="text-align:right;">
 
-97.941
+97.944
 </td>
 
 <td style="text-align:right;">
@@ -4643,7 +4643,7 @@ target
 
 <td>
 
-0.018
+0.012
 </td>
 
 </tr>
@@ -4661,7 +4661,7 @@ Residual
 
 <td>
 
-0.155
+0.108
 </td>
 
 </tr>
@@ -4744,7 +4744,7 @@ target
 
 <td>
 
-0.014
+0.013
 </td>
 
 </tr>
@@ -4823,7 +4823,7 @@ AIC
 
 <td style="text-align:right;">
 
--64.342
+-136.083
 </td>
 
 </tr>
@@ -4837,7 +4837,7 @@ BIC
 
 <td style="text-align:right;">
 
--51.316
+-123.058
 </td>
 
 </tr>
@@ -4851,7 +4851,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.033
+0.036
 </td>
 
 </tr>
@@ -4865,7 +4865,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.052
+0.055
 </td>
 
 </tr>
@@ -4938,22 +4938,22 @@ p
 
 <td style="text-align:right;">
 
-0.323
+0.234
 </td>
 
 <td style="text-align:right;">
 
-0.017
+0.012
 </td>
 
 <td style="text-align:right;">
 
-18.680
+19.529
 </td>
 
 <td style="text-align:right;">
 
-18.311
+18.355
 </td>
 
 <td style="text-align:right;">
@@ -4972,17 +4972,17 @@ orientation_bin1
 
 <td style="text-align:right;">
 
--0.060
+-0.043
 </td>
 
 <td style="text-align:right;">
 
-0.033
+0.023
 </td>
 
 <td style="text-align:right;">
 
--1.848
+-1.916
 </td>
 
 <td style="text-align:right;">
@@ -4992,7 +4992,7 @@ orientation_bin1
 
 <td style="text-align:right;">
 
-0.068
+0.058
 </td>
 
 </tr>
@@ -5088,7 +5088,7 @@ target
 
 <td>
 
-0.022
+0.016
 </td>
 
 </tr>
@@ -5106,7 +5106,7 @@ Residual
 
 <td>
 
-0.158
+0.109
 </td>
 
 </tr>
@@ -5268,7 +5268,7 @@ AIC
 
 <td style="text-align:right;">
 
--84.344
+-156.091
 </td>
 
 </tr>
@@ -5282,7 +5282,7 @@ BIC
 
 <td style="text-align:right;">
 
--71.319
+-143.066
 </td>
 
 </tr>
@@ -5296,7 +5296,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.210
+0.212
 </td>
 
 </tr>
@@ -5310,7 +5310,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.219
+0.222
 </td>
 
 </tr>
@@ -5383,22 +5383,22 @@ p
 
 <td style="text-align:right;">
 
-0.332
+0.241
 </td>
 
 <td style="text-align:right;">
 
-0.015
+0.010
 </td>
 
 <td style="text-align:right;">
 
-22.332
+23.240
 </td>
 
 <td style="text-align:right;">
 
-19.409
+19.311
 </td>
 
 <td style="text-align:right;">
@@ -5417,22 +5417,22 @@ position_bin1
 
 <td style="text-align:right;">
 
--0.148
+-0.103
 </td>
 
 <td style="text-align:right;">
 
-0.029
+0.020
 </td>
 
 <td style="text-align:right;">
 
--5.140
+-5.172
 </td>
 
 <td style="text-align:right;">
 
-97.544
+97.512
 </td>
 
 <td style="text-align:right;">
@@ -5533,7 +5533,7 @@ target
 
 <td>
 
-0.015
+0.011
 </td>
 
 </tr>
@@ -5551,7 +5551,7 @@ Residual
 
 <td>
 
-0.143
+0.099
 </td>
 
 </tr>
@@ -5634,7 +5634,7 @@ target
 
 <td>
 
-0.011
+0.013
 </td>
 
 </tr>
@@ -5716,7 +5716,7 @@ AIC
 
 <td style="text-align:right;">
 
--65.399
+-134.759
 </td>
 
 </tr>
@@ -5730,7 +5730,7 @@ BIC
 
 <td style="text-align:right;">
 
--44.558
+-113.917
 </td>
 
 </tr>
@@ -5744,7 +5744,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.218
+0.219
 </td>
 
 </tr>
@@ -5758,7 +5758,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.227
+0.228
 </td>
 
 </tr>
@@ -5831,22 +5831,22 @@ p
 
 <td style="text-align:right;">
 
-0.329
+0.239
 </td>
 
 <td style="text-align:right;">
 
-0.016
+0.011
 </td>
 
 <td style="text-align:right;">
 
-21.147
+21.983
 </td>
 
 <td style="text-align:right;">
 
-21.379
+21.347
 </td>
 
 <td style="text-align:right;">
@@ -5865,27 +5865,27 @@ handshape_bin1
 
 <td style="text-align:right;">
 
-0.012
+0.007
 </td>
 
 <td style="text-align:right;">
 
-0.039
+0.027
 </td>
 
 <td style="text-align:right;">
 
-0.296
+0.270
 </td>
 
 <td style="text-align:right;">
 
-93.206
+93.166
 </td>
 
 <td style="text-align:right;">
 
-0.768
+0.788
 </td>
 
 </tr>
@@ -5899,27 +5899,27 @@ movement_bin1
 
 <td style="text-align:right;">
 
--0.045
+-0.029
 </td>
 
 <td style="text-align:right;">
 
-0.036
+0.025
 </td>
 
 <td style="text-align:right;">
 
--1.269
+-1.176
 </td>
 
 <td style="text-align:right;">
 
-93.770
+93.711
 </td>
 
 <td style="text-align:right;">
 
-0.207
+0.243
 </td>
 
 </tr>
@@ -5933,27 +5933,27 @@ orientation_bin1
 
 <td style="text-align:right;">
 
-0.004
+0.001
 </td>
 
 <td style="text-align:right;">
 
-0.040
+0.028
 </td>
 
 <td style="text-align:right;">
 
-0.105
+0.029
 </td>
 
 <td style="text-align:right;">
 
-94.138
+94.095
 </td>
 
 <td style="text-align:right;">
 
-0.917
+0.977
 </td>
 
 </tr>
@@ -5967,22 +5967,22 @@ position_bin1
 
 <td style="text-align:right;">
 
--0.136
+-0.095
 </td>
 
 <td style="text-align:right;">
 
-0.032
+0.022
 </td>
 
 <td style="text-align:right;">
 
--4.246
+-4.266
 </td>
 
 <td style="text-align:right;">
 
-93.884
+93.835
 </td>
 
 <td style="text-align:right;">
@@ -6083,7 +6083,7 @@ target
 
 <td>
 
-0.015
+0.011
 </td>
 
 </tr>
@@ -6101,7 +6101,7 @@ Residual
 
 <td>
 
-0.144
+0.100
 </td>
 
 </tr>
@@ -6184,7 +6184,7 @@ target
 
 <td>
 
-0.011
+0.012
 </td>
 
 </tr>
@@ -6199,15 +6199,15 @@ cov2cor(vcov(lmer_zoom_feature))
 
     ## 5 x 5 Matrix of class "corMatrix"
     ##                  (Intercept) handshape_bin1 movement_bin1 orientation_bin1
-    ## (Intercept)           1.0000         0.0308         0.123            0.129
-    ## handshape_bin1        0.0308         1.0000        -0.245           -0.496
-    ## movement_bin1         0.1232        -0.2452         1.000           -0.210
-    ## orientation_bin1      0.1287        -0.4965        -0.210            1.000
-    ## position_bin1        -0.1486        -0.0583        -0.228           -0.161
+    ## (Intercept)           1.0000         0.0303         0.122            0.128
+    ## handshape_bin1        0.0303         1.0000        -0.245           -0.496
+    ## movement_bin1         0.1224        -0.2450         1.000           -0.210
+    ## orientation_bin1      0.1283        -0.4964        -0.210            1.000
+    ## position_bin1        -0.1472        -0.0582        -0.228           -0.161
     ##                  position_bin1
-    ## (Intercept)            -0.1486
-    ## handshape_bin1         -0.0583
-    ## movement_bin1          -0.2276
+    ## (Intercept)            -0.1472
+    ## handshape_bin1         -0.0582
+    ## movement_bin1          -0.2277
     ## orientation_bin1       -0.1605
     ## position_bin1           1.0000
 
@@ -6478,13 +6478,13 @@ cor.test(x, y, method="pearson")
     ##  Pearson's product-moment correlation
     ## 
     ## data:  x and y
-    ## t = -5, df = 98, p-value = 0.0000003
+    ## t = -6, df = 98, p-value = 0.0000003
     ## alternative hypothesis: true correlation is not equal to 0
     ## 95 percent confidence interval:
-    ##  -0.622 -0.319
+    ##  -0.624 -0.321
     ## sample estimates:
     ##    cor 
-    ## -0.485
+    ## -0.487
 
 ``` r
 cor.test(x, y, method="spearman")
@@ -6494,11 +6494,11 @@ cor.test(x, y, method="spearman")
     ##  Spearman's rank correlation rho
     ## 
     ## data:  x and y
-    ## S = 251628, p-value = 0.00000006
+    ## S = 251839, p-value = 0.00000005
     ## alternative hypothesis: true rho is not equal to 0
     ## sample estimates:
-    ##   rho 
-    ## -0.51
+    ##    rho 
+    ## -0.511
 
 The modifed DTW pipeline results in a stronger negative correlation (r =
 -0.51) between the number of similar features and the normalized DTW
@@ -6584,7 +6584,7 @@ AIC
 
 <td style="text-align:right;">
 
--112.480
+-183.931
 </td>
 
 </tr>
@@ -6598,7 +6598,7 @@ BIC
 
 <td style="text-align:right;">
 
--102.059
+-173.510
 </td>
 
 </tr>
@@ -6612,7 +6612,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.233
+0.235
 </td>
 
 </tr>
@@ -6626,7 +6626,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.267
+0.266
 </td>
 
 </tr>
@@ -6699,22 +6699,22 @@ p
 
 <td style="text-align:right;">
 
-0.373
+0.269
 </td>
 
 <td style="text-align:right;">
 
-0.020
+0.014
 </td>
 
 <td style="text-align:right;">
 
-18.895
+19.718
 </td>
 
 <td style="text-align:right;">
 
-53.220
+54.070
 </td>
 
 <td style="text-align:right;">
@@ -6733,22 +6733,22 @@ n_features
 
 <td style="text-align:right;">
 
--0.046
+-0.032
 </td>
 
 <td style="text-align:right;">
 
-0.008
+0.006
 </td>
 
 <td style="text-align:right;">
 
--5.550
+-5.577
 </td>
 
 <td style="text-align:right;">
 
-92.735
+92.999
 </td>
 
 <td style="text-align:right;">
@@ -6830,7 +6830,7 @@ pair
 
 <td>
 
-0.026
+0.018
 </td>
 
 </tr>
@@ -6848,7 +6848,7 @@ Residual
 
 <td>
 
-0.122
+0.085
 </td>
 
 </tr>
@@ -6912,7 +6912,7 @@ pair
 
 <td>
 
-0.044
+0.041
 </td>
 
 </tr>
@@ -7002,7 +7002,7 @@ AIC
 
 <td style="text-align:right;">
 
--97.231
+-168.673
 </td>
 
 </tr>
@@ -7016,7 +7016,7 @@ BIC
 
 <td style="text-align:right;">
 
--86.811
+-158.252
 </td>
 
 </tr>
@@ -7030,7 +7030,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.088
+0.090
 </td>
 
 </tr>
@@ -7044,7 +7044,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.132
+0.129
 </td>
 
 </tr>
@@ -7117,22 +7117,22 @@ p
 
 <td style="text-align:right;">
 
-0.287
+0.210
 </td>
 
 <td style="text-align:right;">
 
-0.016
+0.011
 </td>
 
 <td style="text-align:right;">
 
-18.214
+19.369
 </td>
 
 <td style="text-align:right;">
 
-12.368
+12.436
 </td>
 
 <td style="text-align:right;">
@@ -7151,22 +7151,22 @@ handshape_bin1
 
 <td style="text-align:right;">
 
--0.086
+-0.060
 </td>
 
 <td style="text-align:right;">
 
-0.027
+0.019
 </td>
 
 <td style="text-align:right;">
 
--3.129
+-3.165
 </td>
 
 <td style="text-align:right;">
 
-94.983
+95.325
 </td>
 
 <td style="text-align:right;">
@@ -7248,7 +7248,7 @@ pair
 
 <td>
 
-0.030
+0.020
 </td>
 
 </tr>
@@ -7266,7 +7266,7 @@ Residual
 
 <td>
 
-0.133
+0.093
 </td>
 
 </tr>
@@ -7330,7 +7330,7 @@ pair
 
 <td>
 
-0.048
+0.043
 </td>
 
 </tr>
@@ -7409,7 +7409,7 @@ AIC
 
 <td style="text-align:right;">
 
--94.217
+-165.152
 </td>
 
 </tr>
@@ -7423,7 +7423,7 @@ BIC
 
 <td style="text-align:right;">
 
--83.797
+-154.731
 </td>
 
 </tr>
@@ -7437,7 +7437,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.060
+0.057
 </td>
 
 </tr>
@@ -7451,7 +7451,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.090
+0.083
 </td>
 
 </tr>
@@ -7524,22 +7524,22 @@ p
 
 <td style="text-align:right;">
 
-0.288
+0.210
 </td>
 
 <td style="text-align:right;">
 
-0.015
+0.011
 </td>
 
 <td style="text-align:right;">
 
-18.651
+19.754
 </td>
 
 <td style="text-align:right;">
 
-14.265
+14.173
 </td>
 
 <td style="text-align:right;">
@@ -7558,27 +7558,27 @@ movement_bin1
 
 <td style="text-align:right;">
 
--0.071
+-0.048
 </td>
 
 <td style="text-align:right;">
 
-0.028
+0.019
 </td>
 
 <td style="text-align:right;">
 
--2.531
+-2.468
 </td>
 
 <td style="text-align:right;">
 
-93.714
+93.861
 </td>
 
 <td style="text-align:right;">
 
-0.013
+0.015
 </td>
 
 </tr>
@@ -7655,7 +7655,7 @@ pair
 
 <td>
 
-0.025
+0.016
 </td>
 
 </tr>
@@ -7673,7 +7673,7 @@ Residual
 
 <td>
 
-0.136
+0.095
 </td>
 
 </tr>
@@ -7737,7 +7737,7 @@ pair
 
 <td>
 
-0.032
+0.028
 </td>
 
 </tr>
@@ -7816,7 +7816,7 @@ AIC
 
 <td style="text-align:right;">
 
--98.654
+-170.282
 </td>
 
 </tr>
@@ -7830,7 +7830,7 @@ BIC
 
 <td style="text-align:right;">
 
--88.233
+-159.861
 </td>
 
 </tr>
@@ -7844,7 +7844,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.101
+0.105
 </td>
 
 </tr>
@@ -7858,7 +7858,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.158
+0.160
 </td>
 
 </tr>
@@ -7931,22 +7931,22 @@ p
 
 <td style="text-align:right;">
 
-0.284
+0.208
 </td>
 
 <td style="text-align:right;">
 
-0.016
+0.011
 </td>
 
 <td style="text-align:right;">
 
-17.412
+18.394
 </td>
 
 <td style="text-align:right;">
 
-12.235
+12.179
 </td>
 
 <td style="text-align:right;">
@@ -7965,22 +7965,22 @@ orientation_bin1
 
 <td style="text-align:right;">
 
--0.093
+-0.066
 </td>
 
 <td style="text-align:right;">
 
-0.027
+0.019
 </td>
 
 <td style="text-align:right;">
 
--3.397
+-3.467
 </td>
 
 <td style="text-align:right;">
 
-93.292
+93.433
 </td>
 
 <td style="text-align:right;">
@@ -8062,7 +8062,7 @@ pair
 
 <td>
 
-0.034
+0.023
 </td>
 
 </tr>
@@ -8080,7 +8080,7 @@ Residual
 
 <td>
 
-0.132
+0.091
 </td>
 
 </tr>
@@ -8144,7 +8144,7 @@ pair
 
 <td>
 
-0.064
+0.061
 </td>
 
 </tr>
@@ -8223,7 +8223,7 @@ AIC
 
 <td style="text-align:right;">
 
--135.930
+-207.468
 </td>
 
 </tr>
@@ -8237,7 +8237,7 @@ BIC
 
 <td style="text-align:right;">
 
--125.510
+-197.047
 </td>
 
 </tr>
@@ -8251,7 +8251,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.385
+0.387
 </td>
 
 </tr>
@@ -8338,22 +8338,22 @@ p
 
 <td style="text-align:right;">
 
-0.297
+0.217
 </td>
 
 <td style="text-align:right;">
 
-0.011
+0.008
 </td>
 
 <td style="text-align:right;">
 
-25.923
+27.453
 </td>
 
 <td style="text-align:right;">
 
-13.791
+13.627
 </td>
 
 <td style="text-align:right;">
@@ -8372,22 +8372,22 @@ position_bin1
 
 <td style="text-align:right;">
 
--0.176
+-0.122
 </td>
 
 <td style="text-align:right;">
 
-0.022
+0.016
 </td>
 
 <td style="text-align:right;">
 
--7.866
+-7.897
 </td>
 
 <td style="text-align:right;">
 
-97.538
+97.410
 </td>
 
 <td style="text-align:right;">
@@ -8469,7 +8469,7 @@ pair
 
 <td>
 
-0.010
+0.006
 </td>
 
 </tr>
@@ -8487,7 +8487,7 @@ Residual
 
 <td>
 
-0.111
+0.077
 </td>
 
 </tr>
@@ -8551,7 +8551,7 @@ pair
 
 <td>
 
-0.008
+0.005
 </td>
 
 </tr>
@@ -8633,7 +8633,7 @@ AIC
 
 <td style="text-align:right;">
 
--116.251
+-185.957
 </td>
 
 </tr>
@@ -8647,7 +8647,7 @@ BIC
 
 <td style="text-align:right;">
 
--98.015
+-167.721
 </td>
 
 </tr>
@@ -8661,7 +8661,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.392
+0.396
 </td>
 
 </tr>
@@ -8675,7 +8675,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.405
+0.409
 </td>
 
 </tr>
@@ -8748,22 +8748,22 @@ p
 
 <td style="text-align:right;">
 
-0.294
+0.214
 </td>
 
 <td style="text-align:right;">
 
-0.012
+0.009
 </td>
 
 <td style="text-align:right;">
 
-23.628
+24.929
 </td>
 
 <td style="text-align:right;">
 
-15.824
+15.915
 </td>
 
 <td style="text-align:right;">
@@ -8782,27 +8782,27 @@ handshape_bin1
 
 <td style="text-align:right;">
 
--0.027
+-0.020
 </td>
 
 <td style="text-align:right;">
 
-0.030
+0.021
 </td>
 
 <td style="text-align:right;">
 
--0.899
+-0.937
 </td>
 
 <td style="text-align:right;">
 
-94.574
+94.588
 </td>
 
 <td style="text-align:right;">
 
-0.371
+0.351
 </td>
 
 </tr>
@@ -8816,27 +8816,27 @@ movement_bin1
 
 <td style="text-align:right;">
 
-0.017
+0.014
 </td>
 
 <td style="text-align:right;">
 
-0.028
+0.019
 </td>
 
 <td style="text-align:right;">
 
-0.607
+0.736
 </td>
 
 <td style="text-align:right;">
 
-94.979
+94.984
 </td>
 
 <td style="text-align:right;">
 
-0.545
+0.464
 </td>
 
 </tr>
@@ -8850,27 +8850,27 @@ orientation_bin1
 
 <td style="text-align:right;">
 
--0.021
+-0.016
 </td>
 
 <td style="text-align:right;">
 
-0.031
+0.021
 </td>
 
 <td style="text-align:right;">
 
--0.685
+-0.771
 </td>
 
 <td style="text-align:right;">
 
-93.706
+93.739
 </td>
 
 <td style="text-align:right;">
 
-0.495
+0.443
 </td>
 
 </tr>
@@ -8884,22 +8884,22 @@ position_bin1
 
 <td style="text-align:right;">
 
--0.166
+-0.116
 </td>
 
 <td style="text-align:right;">
 
-0.025
+0.017
 </td>
 
 <td style="text-align:right;">
 
--6.673
+-6.716
 </td>
 
 <td style="text-align:right;">
 
-94.038
+94.001
 </td>
 
 <td style="text-align:right;">
@@ -8981,7 +8981,7 @@ pair
 
 <td>
 
-0.016
+0.011
 </td>
 
 </tr>
@@ -8999,7 +8999,7 @@ Residual
 
 <td>
 
-0.111
+0.077
 </td>
 
 </tr>
@@ -9063,7 +9063,7 @@ pair
 
 <td>
 
-0.021
+0.020
 </td>
 
 </tr>
@@ -9080,13 +9080,13 @@ cov2cor(vcov(lmer_zoom_feature))
     ##                  (Intercept) handshape_bin1 movement_bin1 orientation_bin1
     ## (Intercept)           1.0000         0.0337         0.115            0.135
     ## handshape_bin1        0.0337         1.0000        -0.252           -0.493
-    ## movement_bin1         0.1149        -0.2518         1.000           -0.212
-    ## orientation_bin1      0.1352        -0.4929        -0.212            1.000
-    ## position_bin1        -0.1452        -0.0581        -0.230           -0.161
+    ## movement_bin1         0.1154        -0.2516         1.000           -0.212
+    ## orientation_bin1      0.1351        -0.4930        -0.212            1.000
+    ## position_bin1        -0.1456        -0.0581        -0.230           -0.161
     ##                  position_bin1
-    ## (Intercept)            -0.1452
+    ## (Intercept)            -0.1456
     ## handshape_bin1         -0.0581
-    ## movement_bin1          -0.2305
+    ## movement_bin1          -0.2304
     ## orientation_bin1       -0.1614
     ## position_bin1           1.0000
 

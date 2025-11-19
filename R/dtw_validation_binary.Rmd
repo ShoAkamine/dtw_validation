@@ -6,8 +6,8 @@ output:
     theme: cosmo
     toc: true
     toc_depth: 4
-    toc_float: true
-      # collapsed: true
+    toc_float:
+      collapsed: false
     # number_sections: true
     df_print: paged
     code-tools: true

@@ -1,6 +1,6 @@
 Supplementary analysis
 ================
-Last updated: 2025-11-18
+Last updated: 2025-11-19
 
 # 1. Relation between correlation and regression
 
@@ -512,13 +512,13 @@ cor.test(x, y, method="pearson")
     ##  Pearson's product-moment correlation
     ## 
     ## data:  x and y
-    ## t = -4, df = 98, p-value = 0.0006
+    ## t = -4, df = 98, p-value = 0.0005
     ## alternative hypothesis: true correlation is not equal to 0
     ## 95 percent confidence interval:
-    ##  -0.499 -0.149
+    ##  -0.504 -0.155
     ## sample estimates:
     ##    cor 
-    ## -0.336
+    ## -0.341
 
 ``` r
 # cor.test(x, y, method="spearman")
@@ -604,7 +604,7 @@ AIC
 
 <td style="text-align:right;">
 
--71.792
+-143.750
 </td>
 
 </tr>
@@ -618,7 +618,7 @@ BIC
 
 <td style="text-align:right;">
 
--58.766
+-130.724
 </td>
 
 </tr>
@@ -632,7 +632,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.117
+0.121
 </td>
 
 </tr>
@@ -646,7 +646,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.150
+0.155
 </td>
 
 </tr>
@@ -719,22 +719,22 @@ p
 
 <td style="text-align:right;">
 
-0.329
+0.238
 </td>
 
 <td style="text-align:right;">
 
-0.017
+0.012
 </td>
 
 <td style="text-align:right;">
 
-19.409
+20.285
 </td>
 
 <td style="text-align:right;">
 
-18.142
+18.155
 </td>
 
 <td style="text-align:right;">
@@ -753,22 +753,22 @@ total_similarity_z
 
 <td style="text-align:right;">
 
--0.055
+-0.039
 </td>
 
 <td style="text-align:right;">
 
-0.015
+0.011
 </td>
 
 <td style="text-align:right;">
 
--3.634
+-3.707
 </td>
 
 <td style="text-align:right;">
 
-97.722
+97.708
 </td>
 
 <td style="text-align:right;">
@@ -869,7 +869,7 @@ target
 
 <td>
 
-0.030
+0.021
 </td>
 
 </tr>
@@ -887,7 +887,7 @@ Residual
 
 <td>
 
-0.150
+0.104
 </td>
 
 </tr>
@@ -1003,11 +1003,11 @@ cor.test(df_dtw_zoom$handshape, df_dtw_zoom$average_distance, method="spearman")
     ##  Spearman's rank correlation rho
     ## 
     ## data:  df_dtw_zoom$handshape and df_dtw_zoom$average_distance
-    ## S = 203448, p-value = 0.03
+    ## S = 203727, p-value = 0.03
     ## alternative hypothesis: true rho is not equal to 0
     ## sample estimates:
     ##    rho 
-    ## -0.221
+    ## -0.222
 
 ``` r
 print("Orientation")
@@ -1023,11 +1023,11 @@ cor.test(df_dtw_zoom$orientation, df_dtw_zoom$average_distance, method="spearman
     ##  Spearman's rank correlation rho
     ## 
     ## data:  df_dtw_zoom$orientation and df_dtw_zoom$average_distance
-    ## S = 207306, p-value = 0.01
+    ## S = 208226, p-value = 0.01
     ## alternative hypothesis: true rho is not equal to 0
     ## sample estimates:
     ##    rho 
-    ## -0.244
+    ## -0.249
 
 ``` r
 print("Movement")
@@ -1043,11 +1043,11 @@ cor.test(df_dtw_zoom$movement, df_dtw_zoom$average_distance, method="spearman")
     ##  Spearman's rank correlation rho
     ## 
     ## data:  df_dtw_zoom$movement and df_dtw_zoom$average_distance
-    ## S = 215988, p-value = 0.003
+    ## S = 216109, p-value = 0.003
     ## alternative hypothesis: true rho is not equal to 0
     ## sample estimates:
     ##    rho 
-    ## -0.296
+    ## -0.297
 
 ``` r
 print("Position")
@@ -1063,11 +1063,11 @@ cor.test(df_dtw_zoom$position, df_dtw_zoom$average_distance, method="spearman")
     ##  Spearman's rank correlation rho
     ## 
     ## data:  df_dtw_zoom$position and df_dtw_zoom$average_distance
-    ## S = 254823, p-value = 0.00000002
+    ## S = 254954, p-value = 0.00000001
     ## alternative hypothesis: true rho is not equal to 0
     ## sample estimates:
-    ##    rho 
-    ## -0.529
+    ##   rho 
+    ## -0.53
 
 <br>
 
@@ -1144,7 +1144,7 @@ AIC
 
 <td style="text-align:right;">
 
--62.170
+-133.786
 </td>
 
 </tr>
@@ -1158,7 +1158,7 @@ BIC
 
 <td style="text-align:right;">
 
--49.145
+-120.760
 </td>
 
 </tr>
@@ -1172,7 +1172,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.026
+0.027
 </td>
 
 </tr>
@@ -1186,7 +1186,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.049
+0.050
 </td>
 
 </tr>
@@ -1259,22 +1259,22 @@ p
 
 <td style="text-align:right;">
 
-0.329
+0.239
 </td>
 
 <td style="text-align:right;">
 
-0.017
+0.012
 </td>
 
 <td style="text-align:right;">
 
-19.237
+20.105
 </td>
 
 <td style="text-align:right;">
 
-16.878
+16.928
 </td>
 
 <td style="text-align:right;">
@@ -1293,27 +1293,27 @@ handshape_z
 
 <td style="text-align:right;">
 
--0.026
+-0.019
 </td>
 
 <td style="text-align:right;">
 
-0.016
+0.011
 </td>
 
 <td style="text-align:right;">
 
--1.631
+-1.669
 </td>
 
 <td style="text-align:right;">
 
-97.900
+97.903
 </td>
 
 <td style="text-align:right;">
 
-0.106
+0.098
 </td>
 
 </tr>
@@ -1409,7 +1409,7 @@ target
 
 <td>
 
-0.024
+0.017
 </td>
 
 </tr>
@@ -1427,7 +1427,7 @@ Residual
 
 <td>
 
-0.158
+0.110
 </td>
 
 </tr>
@@ -1589,7 +1589,7 @@ AIC
 
 <td style="text-align:right;">
 
--67.322
+-139.055
 </td>
 
 </tr>
@@ -1603,7 +1603,7 @@ BIC
 
 <td style="text-align:right;">
 
--54.296
+-126.029
 </td>
 
 </tr>
@@ -1617,7 +1617,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.076
+0.078
 </td>
 
 </tr>
@@ -1631,7 +1631,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.104
+0.107
 </td>
 
 </tr>
@@ -1704,22 +1704,22 @@ p
 
 <td style="text-align:right;">
 
-0.329
+0.239
 </td>
 
 <td style="text-align:right;">
 
-0.017
+0.012
 </td>
 
 <td style="text-align:right;">
 
-19.335
+20.196
 </td>
 
 <td style="text-align:right;">
 
-17.037
+17.026
 </td>
 
 <td style="text-align:right;">
@@ -1738,22 +1738,22 @@ movement_z
 
 <td style="text-align:right;">
 
--0.045
+-0.031
 </td>
 
 <td style="text-align:right;">
 
-0.016
+0.011
 </td>
 
 <td style="text-align:right;">
 
--2.857
+-2.903
 </td>
 
 <td style="text-align:right;">
 
-97.648
+97.635
 </td>
 
 <td style="text-align:right;">
@@ -1854,7 +1854,7 @@ target
 
 <td>
 
-0.027
+0.019
 </td>
 
 </tr>
@@ -1872,7 +1872,7 @@ Residual
 
 <td>
 
-0.154
+0.106
 </td>
 
 </tr>
@@ -2034,7 +2034,7 @@ AIC
 
 <td style="text-align:right;">
 
--63.767
+-135.438
 </td>
 
 </tr>
@@ -2048,7 +2048,7 @@ BIC
 
 <td style="text-align:right;">
 
--50.742
+-122.412
 </td>
 
 </tr>
@@ -2062,7 +2062,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.041
+0.043
 </td>
 
 </tr>
@@ -2076,7 +2076,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.062
+0.064
 </td>
 
 </tr>
@@ -2149,22 +2149,22 @@ p
 
 <td style="text-align:right;">
 
-0.329
+0.239
 </td>
 
 <td style="text-align:right;">
 
-0.017
+0.012
 </td>
 
 <td style="text-align:right;">
 
-19.496
+20.360
 </td>
 
 <td style="text-align:right;">
 
-16.647
+16.644
 </td>
 
 <td style="text-align:right;">
@@ -2183,27 +2183,27 @@ orientation_z
 
 <td style="text-align:right;">
 
--0.033
+-0.023
 </td>
 
 <td style="text-align:right;">
 
-0.016
+0.011
 </td>
 
 <td style="text-align:right;">
 
--2.077
+-2.122
 </td>
 
 <td style="text-align:right;">
 
-96.341
+96.322
 </td>
 
 <td style="text-align:right;">
 
-0.040
+0.036
 </td>
 
 </tr>
@@ -2299,7 +2299,7 @@ target
 
 <td>
 
-0.023
+0.016
 </td>
 
 </tr>
@@ -2317,7 +2317,7 @@ Residual
 
 <td>
 
-0.157
+0.109
 </td>
 
 </tr>
@@ -2400,7 +2400,7 @@ target
 
 <td>
 
-0.021
+0.022
 </td>
 
 </tr>
@@ -2479,7 +2479,7 @@ AIC
 
 <td style="text-align:right;">
 
--85.232
+-157.680
 </td>
 
 </tr>
@@ -2493,7 +2493,7 @@ BIC
 
 <td style="text-align:right;">
 
--72.207
+-144.654
 </td>
 
 </tr>
@@ -2507,7 +2507,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.228
+0.235
 </td>
 
 </tr>
@@ -2521,7 +2521,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.256
+0.264
 </td>
 
 </tr>
@@ -2594,22 +2594,22 @@ p
 
 <td style="text-align:right;">
 
-0.328
+0.238
 </td>
 
 <td style="text-align:right;">
 
-0.016
+0.011
 </td>
 
 <td style="text-align:right;">
 
-20.821
+21.780
 </td>
 
 <td style="text-align:right;">
 
-20.262
+20.304
 </td>
 
 <td style="text-align:right;">
@@ -2628,22 +2628,22 @@ position_z
 
 <td style="text-align:right;">
 
--0.077
+-0.055
 </td>
 
 <td style="text-align:right;">
 
-0.014
+0.010
 </td>
 
 <td style="text-align:right;">
 
--5.435
+-5.550
 </td>
 
 <td style="text-align:right;">
 
-97.259
+97.221
 </td>
 
 <td style="text-align:right;">
@@ -2744,7 +2744,7 @@ target
 
 <td>
 
-0.027
+0.019
 </td>
 
 </tr>
@@ -2762,7 +2762,7 @@ Residual
 
 <td>
 
-0.140
+0.097
 </td>
 
 </tr>
@@ -2845,7 +2845,7 @@ target
 
 <td>
 
-0.036
+0.038
 </td>
 
 </tr>
@@ -2927,7 +2927,7 @@ AIC
 
 <td style="text-align:right;">
 
--61.094
+-131.348
 </td>
 
 </tr>
@@ -2941,7 +2941,7 @@ BIC
 
 <td style="text-align:right;">
 
--40.253
+-110.507
 </td>
 
 </tr>
@@ -2955,7 +2955,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.225
+0.233
 </td>
 
 </tr>
@@ -2969,7 +2969,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.256
+0.265
 </td>
 
 </tr>
@@ -3042,22 +3042,22 @@ p
 
 <td style="text-align:right;">
 
-0.328
+0.238
 </td>
 
 <td style="text-align:right;">
 
-0.016
+0.011
 </td>
 
 <td style="text-align:right;">
 
-20.321
+21.257
 </td>
 
 <td style="text-align:right;">
 
-19.732
+19.810
 </td>
 
 <td style="text-align:right;">
@@ -3076,27 +3076,27 @@ handshape_z
 
 <td style="text-align:right;">
 
--0.011
+-0.008
 </td>
 
 <td style="text-align:right;">
 
-0.020
+0.014
 </td>
 
 <td style="text-align:right;">
 
--0.529
+-0.549
 </td>
 
 <td style="text-align:right;">
 
-95.000
+94.999
 </td>
 
 <td style="text-align:right;">
 
-0.598
+0.584
 </td>
 
 </tr>
@@ -3115,22 +3115,22 @@ movement_z
 
 <td style="text-align:right;">
 
-0.020
+0.014
 </td>
 
 <td style="text-align:right;">
 
-0.115
+0.130
 </td>
 
 <td style="text-align:right;">
 
-94.883
+94.868
 </td>
 
 <td style="text-align:right;">
 
-0.909
+0.897
 </td>
 
 </tr>
@@ -3144,12 +3144,12 @@ orientation_z
 
 <td style="text-align:right;">
 
-0.007
+0.005
 </td>
 
 <td style="text-align:right;">
 
-0.023
+0.016
 </td>
 
 <td style="text-align:right;">
@@ -3159,7 +3159,7 @@ orientation_z
 
 <td style="text-align:right;">
 
-93.635
+93.610
 </td>
 
 <td style="text-align:right;">
@@ -3178,22 +3178,22 @@ position_z
 
 <td style="text-align:right;">
 
--0.079
+-0.056
 </td>
 
 <td style="text-align:right;">
 
-0.018
+0.012
 </td>
 
 <td style="text-align:right;">
 
--4.353
+-4.447
 </td>
 
 <td style="text-align:right;">
 
-94.994
+94.989
 </td>
 
 <td style="text-align:right;">
@@ -3294,7 +3294,7 @@ target
 
 <td>
 
-0.029
+0.020
 </td>
 
 </tr>
@@ -3312,7 +3312,7 @@ Residual
 
 <td>
 
-0.142
+0.098
 </td>
 
 </tr>
@@ -3395,7 +3395,7 @@ target
 
 <td>
 
-0.040
+0.042
 </td>
 
 </tr>
@@ -3410,11 +3410,11 @@ cov2cor(vcov(lmer_zoom_feature))
 
     ## 5 x 5 Matrix of class "corMatrix"
     ##               (Intercept) handshape_z movement_z orientation_z position_z
-    ## (Intercept)      1.000000   -0.000942   -0.00245       -0.0017     0.0109
-    ## handshape_z     -0.000942    1.000000   -0.05720       -0.6202     0.0655
-    ## movement_z      -0.002450   -0.057195    1.00000       -0.3089    -0.4662
-    ## orientation_z   -0.001700   -0.620216   -0.30894        1.0000    -0.1489
-    ## position_z       0.010889    0.065539   -0.46616       -0.1489     1.0000
+    ## (Intercept)       1.00000    -0.00103   -0.00251      -0.00171     0.0111
+    ## handshape_z      -0.00103     1.00000   -0.05725      -0.62032     0.0660
+    ## movement_z       -0.00251    -0.05725    1.00000      -0.30875    -0.4664
+    ## orientation_z    -0.00171    -0.62032   -0.30875       1.00000    -0.1491
+    ## position_z        0.01113     0.06603   -0.46640      -0.14913     1.0000
 
 Regressions on each feature show a significant negative association
 between DTW distance and movement, orientation, and position (handshape
@@ -3784,13 +3784,13 @@ cor.test(x, y, method="pearson")
     ##  Pearson's product-moment correlation
     ## 
     ## data:  x and y
-    ## t = -5, df = 98, p-value = 0.0000003
+    ## t = -6, df = 98, p-value = 0.0000002
     ## alternative hypothesis: true correlation is not equal to 0
     ## 95 percent confidence interval:
-    ##  -0.622 -0.318
+    ##  -0.626 -0.325
     ## sample estimates:
-    ##    cor 
-    ## -0.484
+    ##   cor 
+    ## -0.49
 
 ``` r
 cor.test(x, y, method="spearman")
@@ -3800,11 +3800,11 @@ cor.test(x, y, method="spearman")
     ##  Spearman's rank correlation rho
     ## 
     ## data:  x and y
-    ## S = 250085, p-value = 0.0000001
+    ## S = 250813, p-value = 0.00000008
     ## alternative hypothesis: true rho is not equal to 0
     ## sample estimates:
     ##    rho 
-    ## -0.501
+    ## -0.505
 
 The correlation between the total similarity score and the normalized
 DTW distance improved after accounting for the mirrored gestures.
@@ -3885,7 +3885,7 @@ AIC
 
 <td style="text-align:right;">
 
--113.756
+-185.668
 </td>
 
 </tr>
@@ -3899,7 +3899,7 @@ BIC
 
 <td style="text-align:right;">
 
--103.336
+-175.247
 </td>
 
 </tr>
@@ -3913,7 +3913,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.236
+0.242
 </td>
 
 </tr>
@@ -3927,7 +3927,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.291
+0.294
 </td>
 
 </tr>
@@ -4000,22 +4000,22 @@ p
 
 <td style="text-align:right;">
 
-0.294
+0.215
 </td>
 
 <td style="text-align:right;">
 
-0.015
+0.010
 </td>
 
 <td style="text-align:right;">
 
-19.733
+20.898
 </td>
 
 <td style="text-align:right;">
 
-13.059
+13.045
 </td>
 
 <td style="text-align:right;">
@@ -4034,1745 +4034,22 @@ total_similarity_z
 
 <td style="text-align:right;">
 
--0.070
+-0.049
 </td>
 
 <td style="text-align:right;">
 
-0.012
+0.009
 </td>
 
 <td style="text-align:right;">
 
--5.640
+-5.724
 </td>
 
 <td style="text-align:right;">
 
-93.180
-</td>
-
-<td style="text-align:right;">
-
-0.000
-</td>
-
-</tr>
-
-</tbody>
-
-<tfoot>
-
-<tr>
-
-<td style="padding: 0; " colspan="100%">
-
-<sup></sup> p values calculated using Satterthwaite d.f.
-</td>
-
-</tr>
-
-</tfoot>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Random Effects
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th>
-
-Group
-</th>
-
-<th>
-
-Parameter
-</th>
-
-<th>
-
-Std. Dev.
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-pair
-</td>
-
-<td>
-
-(Intercept)
-</td>
-
-<td>
-
-0.034
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-Residual
-</td>
-
-<td>
-
-</td>
-
-<td>
-
-0.120
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Grouping Variables
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th>
-
-Group
-</th>
-
-<th>
-
-\# groups
-</th>
-
-<th>
-
-ICC
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-pair
-</td>
-
-<td>
-
-22
-</td>
-
-<td>
-
-0.072
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-``` r
-check_model(lmer_zoom_total)
-```
-
-![](figures_md/model_diag_supp2-1.png)<!-- -->
-
-<br>
-
-### Correlation for each feature
-
-``` r
-print("Handshape")
-```
-
-    ## [1] "Handshape"
-
-``` r
-cor.test(df_dtw_zoom_v2$handshape, df_dtw_zoom_v2$average_distance, method="spearman")
-```
-
-    ## 
-    ##  Spearman's rank correlation rho
-    ## 
-    ## data:  df_dtw_zoom_v2$handshape and df_dtw_zoom_v2$average_distance
-    ## S = 221316, p-value = 0.0009
-    ## alternative hypothesis: true rho is not equal to 0
-    ## sample estimates:
-    ##    rho 
-    ## -0.328
-
-``` r
-print("Orientation")
-```
-
-    ## [1] "Orientation"
-
-``` r
-cor.test(df_dtw_zoom_v2$orientation, df_dtw_zoom_v2$average_distance, method="spearman")
-```
-
-    ## 
-    ##  Spearman's rank correlation rho
-    ## 
-    ## data:  df_dtw_zoom_v2$orientation and df_dtw_zoom_v2$average_distance
-    ## S = 216770, p-value = 0.002
-    ## alternative hypothesis: true rho is not equal to 0
-    ## sample estimates:
-    ##    rho 
-    ## -0.301
-
-``` r
-print("Movement")
-```
-
-    ## [1] "Movement"
-
-``` r
-cor.test(df_dtw_zoom_v2$movement, df_dtw_zoom_v2$average_distance, method="spearman")
-```
-
-    ## 
-    ##  Spearman's rank correlation rho
-    ## 
-    ## data:  df_dtw_zoom_v2$movement and df_dtw_zoom_v2$average_distance
-    ## S = 226207, p-value = 0.0003
-    ## alternative hypothesis: true rho is not equal to 0
-    ## sample estimates:
-    ##    rho 
-    ## -0.357
-
-``` r
-print("Position")
-```
-
-    ## [1] "Position"
-
-``` r
-cor.test(df_dtw_zoom_v2$position, df_dtw_zoom_v2$average_distance, method="spearman")
-```
-
-    ## 
-    ##  Spearman's rank correlation rho
-    ## 
-    ## data:  df_dtw_zoom_v2$position and df_dtw_zoom_v2$average_distance
-    ## S = 276775, p-value = 0.00000000000007
-    ## alternative hypothesis: true rho is not equal to 0
-    ## sample estimates:
-    ##    rho 
-    ## -0.661
-
-<br>
-
-### LMM for each feature
-
-``` r
-### each feature
-lmer_zoom_shape = lmer(average_distance ~ 
-                 handshape_z + (1|pair),
-               data = df_dtw_zoom_v2)
-summ(lmer_zoom_shape, digits = 3)
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Observations
-</td>
-
-<td style="text-align:right;">
-
-100
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Dependent variable
-</td>
-
-<td style="text-align:right;">
-
-average_distance
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Type
-</td>
-
-<td style="text-align:right;">
-
-Mixed effects linear regression
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-AIC
-</td>
-
-<td style="text-align:right;">
-
--96.063
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-BIC
-</td>
-
-<td style="text-align:right;">
-
--85.642
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Pseudo-R² (fixed effects)
-</td>
-
-<td style="text-align:right;">
-
-0.091
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Pseudo-R² (total)
-</td>
-
-<td style="text-align:right;">
-
-0.141
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Fixed Effects
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th style="text-align:left;">
-
-</th>
-
-<th style="text-align:right;">
-
-Est.
-</th>
-
-<th style="text-align:right;">
-
-S.E.
-</th>
-
-<th style="text-align:right;">
-
-t val.
-</th>
-
-<th style="text-align:right;">
-
-d.f.
-</th>
-
-<th style="text-align:right;">
-
-p
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-(Intercept)
-</td>
-
-<td style="text-align:right;">
-
-0.295
-</td>
-
-<td style="text-align:right;">
-
-0.016
-</td>
-
-<td style="text-align:right;">
-
-18.758
-</td>
-
-<td style="text-align:right;">
-
-10.742
-</td>
-
-<td style="text-align:right;">
-
-0.000
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-handshape_z
-</td>
-
-<td style="text-align:right;">
-
--0.043
-</td>
-
-<td style="text-align:right;">
-
-0.014
-</td>
-
-<td style="text-align:right;">
-
--3.182
-</td>
-
-<td style="text-align:right;">
-
-95.817
-</td>
-
-<td style="text-align:right;">
-
-0.002
-</td>
-
-</tr>
-
-</tbody>
-
-<tfoot>
-
-<tr>
-
-<td style="padding: 0; " colspan="100%">
-
-<sup></sup> p values calculated using Satterthwaite d.f.
-</td>
-
-</tr>
-
-</tfoot>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Random Effects
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th>
-
-Group
-</th>
-
-<th>
-
-Parameter
-</th>
-
-<th>
-
-Std. Dev.
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-pair
-</td>
-
-<td>
-
-(Intercept)
-</td>
-
-<td>
-
-0.032
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-Residual
-</td>
-
-<td>
-
-</td>
-
-<td>
-
-0.133
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Grouping Variables
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th>
-
-Group
-</th>
-
-<th>
-
-\# groups
-</th>
-
-<th>
-
-ICC
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-pair
-</td>
-
-<td>
-
-22
-</td>
-
-<td>
-
-0.055
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-``` r
-lmer_zoom_movement = lmer(average_distance ~ 
-                             movement_z + (1|pair),
-                           data = df_dtw_zoom_v2)
-summ(lmer_zoom_movement, digits = 3)
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Observations
-</td>
-
-<td style="text-align:right;">
-
-100
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Dependent variable
-</td>
-
-<td style="text-align:right;">
-
-average_distance
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Type
-</td>
-
-<td style="text-align:right;">
-
-Mixed effects linear regression
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-AIC
-</td>
-
-<td style="text-align:right;">
-
--100.665
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-BIC
-</td>
-
-<td style="text-align:right;">
-
--90.245
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Pseudo-R² (fixed effects)
-</td>
-
-<td style="text-align:right;">
-
-0.131
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Pseudo-R² (total)
-</td>
-
-<td style="text-align:right;">
-
-0.165
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Fixed Effects
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th style="text-align:left;">
-
-</th>
-
-<th style="text-align:right;">
-
-Est.
-</th>
-
-<th style="text-align:right;">
-
-S.E.
-</th>
-
-<th style="text-align:right;">
-
-t val.
-</th>
-
-<th style="text-align:right;">
-
-d.f.
-</th>
-
-<th style="text-align:right;">
-
-p
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-(Intercept)
-</td>
-
-<td style="text-align:right;">
-
-0.296
-</td>
-
-<td style="text-align:right;">
-
-0.015
-</td>
-
-<td style="text-align:right;">
-
-19.939
-</td>
-
-<td style="text-align:right;">
-
-12.589
-</td>
-
-<td style="text-align:right;">
-
-0.000
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-movement_z
-</td>
-
-<td style="text-align:right;">
-
--0.052
-</td>
-
-<td style="text-align:right;">
-
-0.013
-</td>
-
-<td style="text-align:right;">
-
--3.895
-</td>
-
-<td style="text-align:right;">
-
-96.579
-</td>
-
-<td style="text-align:right;">
-
-0.000
-</td>
-
-</tr>
-
-</tbody>
-
-<tfoot>
-
-<tr>
-
-<td style="padding: 0; " colspan="100%">
-
-<sup></sup> p values calculated using Satterthwaite d.f.
-</td>
-
-</tr>
-
-</tfoot>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Random Effects
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th>
-
-Group
-</th>
-
-<th>
-
-Parameter
-</th>
-
-<th>
-
-Std. Dev.
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-pair
-</td>
-
-<td>
-
-(Intercept)
-</td>
-
-<td>
-
-0.026
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-Residual
-</td>
-
-<td>
-
-</td>
-
-<td>
-
-0.130
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Grouping Variables
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th>
-
-Group
-</th>
-
-<th>
-
-\# groups
-</th>
-
-<th>
-
-ICC
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-pair
-</td>
-
-<td>
-
-22
-</td>
-
-<td>
-
-0.039
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-``` r
-lmer_zoom_orientation = lmer(average_distance ~ 
-                                orientation_z + (1|pair),
-                              data = df_dtw_zoom_v2)
-summ(lmer_zoom_orientation, digits = 3)
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Observations
-</td>
-
-<td style="text-align:right;">
-
-100
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Dependent variable
-</td>
-
-<td style="text-align:right;">
-
-average_distance
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Type
-</td>
-
-<td style="text-align:right;">
-
-Mixed effects linear regression
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-AIC
-</td>
-
-<td style="text-align:right;">
-
--96.387
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-BIC
-</td>
-
-<td style="text-align:right;">
-
--85.967
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Pseudo-R² (fixed effects)
-</td>
-
-<td style="text-align:right;">
-
-0.096
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Pseudo-R² (total)
-</td>
-
-<td style="text-align:right;">
-
-0.169
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Fixed Effects
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th style="text-align:left;">
-
-</th>
-
-<th style="text-align:right;">
-
-Est.
-</th>
-
-<th style="text-align:right;">
-
-S.E.
-</th>
-
-<th style="text-align:right;">
-
-t val.
-</th>
-
-<th style="text-align:right;">
-
-d.f.
-</th>
-
-<th style="text-align:right;">
-
-p
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-(Intercept)
-</td>
-
-<td style="text-align:right;">
-
-0.295
-</td>
-
-<td style="text-align:right;">
-
-0.017
-</td>
-
-<td style="text-align:right;">
-
-17.787
-</td>
-
-<td style="text-align:right;">
-
-12.136
-</td>
-
-<td style="text-align:right;">
-
-0.000
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-orientation_z
-</td>
-
-<td style="text-align:right;">
-
--0.044
-</td>
-
-<td style="text-align:right;">
-
-0.014
-</td>
-
-<td style="text-align:right;">
-
--3.294
-</td>
-
-<td style="text-align:right;">
-
-94.407
-</td>
-
-<td style="text-align:right;">
-
-0.001
-</td>
-
-</tr>
-
-</tbody>
-
-<tfoot>
-
-<tr>
-
-<td style="padding: 0; " colspan="100%">
-
-<sup></sup> p values calculated using Satterthwaite d.f.
-</td>
-
-</tr>
-
-</tfoot>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Random Effects
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th>
-
-Group
-</th>
-
-<th>
-
-Parameter
-</th>
-
-<th>
-
-Std. Dev.
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-pair
-</td>
-
-<td>
-
-(Intercept)
-</td>
-
-<td>
-
-0.039
-</td>
-
-</tr>
-
-<tr>
-
-<td>
-
-Residual
-</td>
-
-<td>
-
-</td>
-
-<td>
-
-0.131
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Grouping Variables
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th>
-
-Group
-</th>
-
-<th>
-
-\# groups
-</th>
-
-<th>
-
-ICC
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-
-pair
-</td>
-
-<td>
-
-22
-</td>
-
-<td>
-
-0.081
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-``` r
-lmer_zoom_position = lmer(average_distance ~ 
-                              position_z + (1|pair),
-                            data = df_dtw_zoom_v2)
-summ(lmer_zoom_position, digits = 3)
-```
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Observations
-</td>
-
-<td style="text-align:right;">
-
-100
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Dependent variable
-</td>
-
-<td style="text-align:right;">
-
-average_distance
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Type
-</td>
-
-<td style="text-align:right;">
-
-Mixed effects linear regression
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-AIC
-</td>
-
-<td style="text-align:right;">
-
--137.946
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-BIC
-</td>
-
-<td style="text-align:right;">
-
--127.525
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Pseudo-R² (fixed effects)
-</td>
-
-<td style="text-align:right;">
-
-0.405
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-Pseudo-R² (total)
-</td>
-
-<td style="text-align:right;">
-
-0.431
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
-
-<thead>
-
-<tr>
-
-<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
-
-<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
-
-Fixed Effects
-
-</div>
-
-</th>
-
-</tr>
-
-<tr>
-
-<th style="text-align:left;">
-
-</th>
-
-<th style="text-align:right;">
-
-Est.
-</th>
-
-<th style="text-align:right;">
-
-S.E.
-</th>
-
-<th style="text-align:right;">
-
-t val.
-</th>
-
-<th style="text-align:right;">
-
-d.f.
-</th>
-
-<th style="text-align:right;">
-
-p
-</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-(Intercept)
-</td>
-
-<td style="text-align:right;">
-
-0.294
-</td>
-
-<td style="text-align:right;">
-
-0.012
-</td>
-
-<td style="text-align:right;">
-
-23.742
-</td>
-
-<td style="text-align:right;">
-
-16.208
-</td>
-
-<td style="text-align:right;">
-
-0.000
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-position_z
-</td>
-
-<td style="text-align:right;">
-
--0.091
-</td>
-
-<td style="text-align:right;">
-
-0.011
-</td>
-
-<td style="text-align:right;">
-
--8.221
-</td>
-
-<td style="text-align:right;">
-
-97.982
+93.378
 </td>
 
 <td style="text-align:right;">
@@ -5872,7 +4149,7 @@ Residual
 
 <td>
 
-0.108
+0.084
 </td>
 
 </tr>
@@ -5936,7 +4213,7 @@ pair
 
 <td>
 
-0.044
+0.069
 </td>
 
 </tr>
@@ -5946,13 +4223,105 @@ pair
 </table>
 
 ``` r
-### all features
-lmer_zoom_feature = lmer(average_distance ~ 
-                            handshape_z + movement_z + orientation_z + position_z +
-                            (1|pair),
-                          data = df_dtw_zoom_v2)
+check_model(lmer_zoom_total)
+```
 
-summ(lmer_zoom_feature, digits = 3)
+![](figures_md/model_diag_supp2-1.png)<!-- -->
+
+<br>
+
+### Correlation for each feature
+
+``` r
+print("Handshape")
+```
+
+    ## [1] "Handshape"
+
+``` r
+cor.test(df_dtw_zoom_v2$handshape, df_dtw_zoom_v2$average_distance, method="spearman")
+```
+
+    ## 
+    ##  Spearman's rank correlation rho
+    ## 
+    ## data:  df_dtw_zoom_v2$handshape and df_dtw_zoom_v2$average_distance
+    ## S = 221910, p-value = 0.0008
+    ## alternative hypothesis: true rho is not equal to 0
+    ## sample estimates:
+    ##    rho 
+    ## -0.332
+
+``` r
+print("Orientation")
+```
+
+    ## [1] "Orientation"
+
+``` r
+cor.test(df_dtw_zoom_v2$orientation, df_dtw_zoom_v2$average_distance, method="spearman")
+```
+
+    ## 
+    ##  Spearman's rank correlation rho
+    ## 
+    ## data:  df_dtw_zoom_v2$orientation and df_dtw_zoom_v2$average_distance
+    ## S = 217364, p-value = 0.002
+    ## alternative hypothesis: true rho is not equal to 0
+    ## sample estimates:
+    ##    rho 
+    ## -0.304
+
+``` r
+print("Movement")
+```
+
+    ## [1] "Movement"
+
+``` r
+cor.test(df_dtw_zoom_v2$movement, df_dtw_zoom_v2$average_distance, method="spearman")
+```
+
+    ## 
+    ##  Spearman's rank correlation rho
+    ## 
+    ## data:  df_dtw_zoom_v2$movement and df_dtw_zoom_v2$average_distance
+    ## S = 226542, p-value = 0.0002
+    ## alternative hypothesis: true rho is not equal to 0
+    ## sample estimates:
+    ##    rho 
+    ## -0.359
+
+``` r
+print("Position")
+```
+
+    ## [1] "Position"
+
+``` r
+cor.test(df_dtw_zoom_v2$position, df_dtw_zoom_v2$average_distance, method="spearman")
+```
+
+    ## 
+    ##  Spearman's rank correlation rho
+    ## 
+    ## data:  df_dtw_zoom_v2$position and df_dtw_zoom_v2$average_distance
+    ## S = 277275, p-value = 0.00000000000005
+    ## alternative hypothesis: true rho is not equal to 0
+    ## sample estimates:
+    ##    rho 
+    ## -0.664
+
+<br>
+
+### LMM for each feature
+
+``` r
+### each feature
+lmer_zoom_shape = lmer(average_distance ~ 
+                 handshape_z + (1|pair),
+               data = df_dtw_zoom_v2)
+summ(lmer_zoom_shape, digits = 3)
 ```
 
 <table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -6018,7 +4387,7 @@ AIC
 
 <td style="text-align:right;">
 
--115.495
+-167.463
 </td>
 
 </tr>
@@ -6032,7 +4401,7 @@ BIC
 
 <td style="text-align:right;">
 
--97.259
+-157.042
 </td>
 
 </tr>
@@ -6046,7 +4415,7 @@ Pseudo-R² (fixed effects)
 
 <td style="text-align:right;">
 
-0.419
+0.093
 </td>
 
 </tr>
@@ -6060,7 +4429,7 @@ Pseudo-R² (total)
 
 <td style="text-align:right;">
 
-0.442
+0.137
 </td>
 
 </tr>
@@ -6133,22 +4502,22 @@ p
 
 <td style="text-align:right;">
 
-0.294
+0.215
 </td>
 
 <td style="text-align:right;">
 
-0.012
+0.011
 </td>
 
 <td style="text-align:right;">
 
-23.993
+19.933
 </td>
 
 <td style="text-align:right;">
 
-15.845
+10.777
 </td>
 
 <td style="text-align:right;">
@@ -6167,27 +4536,400 @@ handshape_z
 
 <td style="text-align:right;">
 
--0.028
+-0.030
 </td>
 
 <td style="text-align:right;">
 
-0.015
+0.009
 </td>
 
 <td style="text-align:right;">
 
--1.820
+-3.209
 </td>
 
 <td style="text-align:right;">
 
-94.726
+96.015
 </td>
 
 <td style="text-align:right;">
 
-0.072
+0.002
+</td>
+
+</tr>
+
+</tbody>
+
+<tfoot>
+
+<tr>
+
+<td style="padding: 0; " colspan="100%">
+
+<sup></sup> p values calculated using Satterthwaite d.f.
+</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Random Effects
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th>
+
+Group
+</th>
+
+<th>
+
+Parameter
+</th>
+
+<th>
+
+Std. Dev.
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+pair
+</td>
+
+<td>
+
+(Intercept)
+</td>
+
+<td>
+
+0.021
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Residual
+</td>
+
+<td>
+
+</td>
+
+<td>
+
+0.092
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Grouping Variables
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th>
+
+Group
+</th>
+
+<th>
+
+\# groups
+</th>
+
+<th>
+
+ICC
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+pair
+</td>
+
+<td>
+
+22
+</td>
+
+<td>
+
+0.049
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+``` r
+lmer_zoom_movement = lmer(average_distance ~ 
+                             movement_z + (1|pair),
+                           data = df_dtw_zoom_v2)
+summ(lmer_zoom_movement, digits = 3)
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Observations
+</td>
+
+<td style="text-align:right;">
+
+100
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Dependent variable
+</td>
+
+<td style="text-align:right;">
+
+average_distance
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Type
+</td>
+
+<td style="text-align:right;">
+
+Mixed effects linear regression
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+AIC
+</td>
+
+<td style="text-align:right;">
+
+-172.190
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+BIC
+</td>
+
+<td style="text-align:right;">
+
+-161.769
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Pseudo-R² (fixed effects)
+</td>
+
+<td style="text-align:right;">
+
+0.134
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Pseudo-R² (total)
+</td>
+
+<td style="text-align:right;">
+
+0.164
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Fixed Effects
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th style="text-align:left;">
+
+</th>
+
+<th style="text-align:right;">
+
+Est.
+</th>
+
+<th style="text-align:right;">
+
+S.E.
+</th>
+
+<th style="text-align:right;">
+
+t val.
+</th>
+
+<th style="text-align:right;">
+
+d.f.
+</th>
+
+<th style="text-align:right;">
+
+p
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+(Intercept)
+</td>
+
+<td style="text-align:right;">
+
+0.215
+</td>
+
+<td style="text-align:right;">
+
+0.010
+</td>
+
+<td style="text-align:right;">
+
+21.148
+</td>
+
+<td style="text-align:right;">
+
+12.418
+</td>
+
+<td style="text-align:right;">
+
+0.000
 </td>
 
 </tr>
@@ -6201,90 +4943,22 @@ movement_z
 
 <td style="text-align:right;">
 
-0.007
+-0.036
 </td>
 
 <td style="text-align:right;">
 
-0.015
+0.009
 </td>
 
 <td style="text-align:right;">
 
-0.438
+-3.938
 </td>
 
 <td style="text-align:right;">
 
-94.965
-</td>
-
-<td style="text-align:right;">
-
-0.662
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-orientation_z
-</td>
-
-<td style="text-align:right;">
-
-0.012
-</td>
-
-<td style="text-align:right;">
-
-0.017
-</td>
-
-<td style="text-align:right;">
-
-0.717
-</td>
-
-<td style="text-align:right;">
-
-94.897
-</td>
-
-<td style="text-align:right;">
-
-0.475
-</td>
-
-</tr>
-
-<tr>
-
-<td style="text-align:left;font-weight: bold;">
-
-position_z
-</td>
-
-<td style="text-align:right;">
-
--0.092
-</td>
-
-<td style="text-align:right;">
-
-0.014
-</td>
-
-<td style="text-align:right;">
-
--6.698
-</td>
-
-<td style="text-align:right;">
-
-94.970
+96.661
 </td>
 
 <td style="text-align:right;">
@@ -6366,7 +5040,7 @@ pair
 
 <td>
 
-0.022
+0.017
 </td>
 
 </tr>
@@ -6384,7 +5058,7 @@ Residual
 
 <td>
 
-0.107
+0.091
 </td>
 
 </tr>
@@ -6448,7 +5122,1333 @@ pair
 
 <td>
 
-0.040
+0.035
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+``` r
+lmer_zoom_orientation = lmer(average_distance ~ 
+                                orientation_z + (1|pair),
+                              data = df_dtw_zoom_v2)
+summ(lmer_zoom_orientation, digits = 3)
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Observations
+</td>
+
+<td style="text-align:right;">
+
+100
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Dependent variable
+</td>
+
+<td style="text-align:right;">
+
+average_distance
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Type
+</td>
+
+<td style="text-align:right;">
+
+Mixed effects linear regression
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+AIC
+</td>
+
+<td style="text-align:right;">
+
+-167.808
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+BIC
+</td>
+
+<td style="text-align:right;">
+
+-157.388
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Pseudo-R² (fixed effects)
+</td>
+
+<td style="text-align:right;">
+
+0.098
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Pseudo-R² (total)
+</td>
+
+<td style="text-align:right;">
+
+0.167
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Fixed Effects
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th style="text-align:left;">
+
+</th>
+
+<th style="text-align:right;">
+
+Est.
+</th>
+
+<th style="text-align:right;">
+
+S.E.
+</th>
+
+<th style="text-align:right;">
+
+t val.
+</th>
+
+<th style="text-align:right;">
+
+d.f.
+</th>
+
+<th style="text-align:right;">
+
+p
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+(Intercept)
+</td>
+
+<td style="text-align:right;">
+
+0.215
+</td>
+
+<td style="text-align:right;">
+
+0.011
+</td>
+
+<td style="text-align:right;">
+
+18.796
+</td>
+
+<td style="text-align:right;">
+
+12.095
+</td>
+
+<td style="text-align:right;">
+
+0.000
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+orientation_z
+</td>
+
+<td style="text-align:right;">
+
+-0.031
+</td>
+
+<td style="text-align:right;">
+
+0.009
+</td>
+
+<td style="text-align:right;">
+
+-3.331
+</td>
+
+<td style="text-align:right;">
+
+94.596
+</td>
+
+<td style="text-align:right;">
+
+0.001
+</td>
+
+</tr>
+
+</tbody>
+
+<tfoot>
+
+<tr>
+
+<td style="padding: 0; " colspan="100%">
+
+<sup></sup> p values calculated using Satterthwaite d.f.
+</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Random Effects
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th>
+
+Group
+</th>
+
+<th>
+
+Parameter
+</th>
+
+<th>
+
+Std. Dev.
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+pair
+</td>
+
+<td>
+
+(Intercept)
+</td>
+
+<td>
+
+0.026
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Residual
+</td>
+
+<td>
+
+</td>
+
+<td>
+
+0.091
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Grouping Variables
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th>
+
+Group
+</th>
+
+<th>
+
+\# groups
+</th>
+
+<th>
+
+ICC
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+pair
+</td>
+
+<td>
+
+22
+</td>
+
+<td>
+
+0.077
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+``` r
+lmer_zoom_position = lmer(average_distance ~ 
+                              position_z + (1|pair),
+                            data = df_dtw_zoom_v2)
+summ(lmer_zoom_position, digits = 3)
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Observations
+</td>
+
+<td style="text-align:right;">
+
+100
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Dependent variable
+</td>
+
+<td style="text-align:right;">
+
+average_distance
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Type
+</td>
+
+<td style="text-align:right;">
+
+Mixed effects linear regression
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+AIC
+</td>
+
+<td style="text-align:right;">
+
+-210.862
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+BIC
+</td>
+
+<td style="text-align:right;">
+
+-200.442
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Pseudo-R² (fixed effects)
+</td>
+
+<td style="text-align:right;">
+
+0.416
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Pseudo-R² (total)
+</td>
+
+<td style="text-align:right;">
+
+0.441
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Fixed Effects
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th style="text-align:left;">
+
+</th>
+
+<th style="text-align:right;">
+
+Est.
+</th>
+
+<th style="text-align:right;">
+
+S.E.
+</th>
+
+<th style="text-align:right;">
+
+t val.
+</th>
+
+<th style="text-align:right;">
+
+d.f.
+</th>
+
+<th style="text-align:right;">
+
+p
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+(Intercept)
+</td>
+
+<td style="text-align:right;">
+
+0.214
+</td>
+
+<td style="text-align:right;">
+
+0.009
+</td>
+
+<td style="text-align:right;">
+
+25.130
+</td>
+
+<td style="text-align:right;">
+
+16.164
+</td>
+
+<td style="text-align:right;">
+
+0.000
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+position_z
+</td>
+
+<td style="text-align:right;">
+
+-0.064
+</td>
+
+<td style="text-align:right;">
+
+0.008
+</td>
+
+<td style="text-align:right;">
+
+-8.398
+</td>
+
+<td style="text-align:right;">
+
+97.980
+</td>
+
+<td style="text-align:right;">
+
+0.000
+</td>
+
+</tr>
+
+</tbody>
+
+<tfoot>
+
+<tr>
+
+<td style="padding: 0; " colspan="100%">
+
+<sup></sup> p values calculated using Satterthwaite d.f.
+</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Random Effects
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th>
+
+Group
+</th>
+
+<th>
+
+Parameter
+</th>
+
+<th>
+
+Std. Dev.
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+pair
+</td>
+
+<td>
+
+(Intercept)
+</td>
+
+<td>
+
+0.016
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Residual
+</td>
+
+<td>
+
+</td>
+
+<td>
+
+0.074
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Grouping Variables
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th>
+
+Group
+</th>
+
+<th>
+
+\# groups
+</th>
+
+<th>
+
+ICC
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+pair
+</td>
+
+<td>
+
+22
+</td>
+
+<td>
+
+0.043
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+``` r
+### all features
+lmer_zoom_feature = lmer(average_distance ~ 
+                            handshape_z + movement_z + orientation_z + position_z +
+                            (1|pair),
+                          data = df_dtw_zoom_v2)
+
+summ(lmer_zoom_feature, digits = 3)
+```
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Observations
+</td>
+
+<td style="text-align:right;">
+
+100
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Dependent variable
+</td>
+
+<td style="text-align:right;">
+
+average_distance
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Type
+</td>
+
+<td style="text-align:right;">
+
+Mixed effects linear regression
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+AIC
+</td>
+
+<td style="text-align:right;">
+
+-186.314
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+BIC
+</td>
+
+<td style="text-align:right;">
+
+-168.078
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Pseudo-R² (fixed effects)
+</td>
+
+<td style="text-align:right;">
+
+0.429
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+Pseudo-R² (total)
+</td>
+
+<td style="text-align:right;">
+
+0.452
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="6">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Fixed Effects
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th style="text-align:left;">
+
+</th>
+
+<th style="text-align:right;">
+
+Est.
+</th>
+
+<th style="text-align:right;">
+
+S.E.
+</th>
+
+<th style="text-align:right;">
+
+t val.
+</th>
+
+<th style="text-align:right;">
+
+d.f.
+</th>
+
+<th style="text-align:right;">
+
+p
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+(Intercept)
+</td>
+
+<td style="text-align:right;">
+
+0.214
+</td>
+
+<td style="text-align:right;">
+
+0.008
+</td>
+
+<td style="text-align:right;">
+
+25.444
+</td>
+
+<td style="text-align:right;">
+
+15.932
+</td>
+
+<td style="text-align:right;">
+
+0.000
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+handshape_z
+</td>
+
+<td style="text-align:right;">
+
+-0.020
+</td>
+
+<td style="text-align:right;">
+
+0.011
+</td>
+
+<td style="text-align:right;">
+
+-1.853
+</td>
+
+<td style="text-align:right;">
+
+94.731
+</td>
+
+<td style="text-align:right;">
+
+0.067
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+movement_z
+</td>
+
+<td style="text-align:right;">
+
+0.005
+</td>
+
+<td style="text-align:right;">
+
+0.010
+</td>
+
+<td style="text-align:right;">
+
+0.460
+</td>
+
+<td style="text-align:right;">
+
+94.962
+</td>
+
+<td style="text-align:right;">
+
+0.646
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+orientation_z
+</td>
+
+<td style="text-align:right;">
+
+0.009
+</td>
+
+<td style="text-align:right;">
+
+0.012
+</td>
+
+<td style="text-align:right;">
+
+0.724
+</td>
+
+<td style="text-align:right;">
+
+94.892
+</td>
+
+<td style="text-align:right;">
+
+0.471
+</td>
+
+</tr>
+
+<tr>
+
+<td style="text-align:left;font-weight: bold;">
+
+position_z
+</td>
+
+<td style="text-align:right;">
+
+-0.065
+</td>
+
+<td style="text-align:right;">
+
+0.009
+</td>
+
+<td style="text-align:right;">
+
+-6.852
+</td>
+
+<td style="text-align:right;">
+
+94.967
+</td>
+
+<td style="text-align:right;">
+
+0.000
+</td>
+
+</tr>
+
+</tbody>
+
+<tfoot>
+
+<tr>
+
+<td style="padding: 0; " colspan="100%">
+
+<sup></sup> p values calculated using Satterthwaite d.f.
+</td>
+
+</tr>
+
+</tfoot>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Random Effects
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th>
+
+Group
+</th>
+
+<th>
+
+Parameter
+</th>
+
+<th>
+
+Std. Dev.
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+pair
+</td>
+
+<td>
+
+(Intercept)
+</td>
+
+<td>
+
+0.015
+</td>
+
+</tr>
+
+<tr>
+
+<td>
+
+Residual
+</td>
+
+<td>
+
+</td>
+
+<td>
+
+0.074
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+<table class="table table-striped table-hover table-condensed table-responsive" style="width: auto !important; margin-left: auto; margin-right: auto;">
+
+<thead>
+
+<tr>
+
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+
+Grouping Variables
+
+</div>
+
+</th>
+
+</tr>
+
+<tr>
+
+<th>
+
+Group
+</th>
+
+<th>
+
+\# groups
+</th>
+
+<th>
+
+ICC
+</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>
+
+pair
+</td>
+
+<td>
+
+22
+</td>
+
+<td>
+
+0.039
 </td>
 
 </tr>
@@ -6463,11 +6463,11 @@ cov2cor(vcov(lmer_zoom_feature))
 
     ## 5 x 5 Matrix of class "corMatrix"
     ##               (Intercept) handshape_z movement_z orientation_z position_z
-    ## (Intercept)       1.00000     0.00171    -0.0240        0.0252     0.0142
-    ## handshape_z       0.00171     1.00000    -0.0558       -0.6136     0.0482
-    ## movement_z       -0.02401    -0.05583     1.0000       -0.3255    -0.4534
-    ## orientation_z     0.02518    -0.61364    -0.3255        1.0000    -0.1393
-    ## position_z        0.01421     0.04817    -0.4534       -0.1393     1.0000
+    ## (Intercept)        1.0000      0.0017    -0.0237        0.0248     0.0140
+    ## handshape_z        0.0017      1.0000    -0.0558       -0.6137     0.0482
+    ## movement_z        -0.0237     -0.0558     1.0000       -0.3253    -0.4535
+    ## orientation_z      0.0248     -0.6137    -0.3253        1.0000    -0.1393
+    ## position_z         0.0140      0.0482    -0.4535       -0.1393     1.0000
 
 Regressions on each feature show a significant negative association
 between DTW distance for all features. However, the model with all

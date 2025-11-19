@@ -34,6 +34,45 @@ def get_keypoints():
     return keypoints
 
 
+### identify which column indices in a dataframe correspond to which body parts
+keypoint_thumb_right = ["x_right_thumb_tip_relative", "y_right_thumb_tip_relative", "z_right_thumb_tip_relative"]
+keypoint_thumb_left = ["x_left_thumb_tip_relative", "y_left_thumb_tip_relative", "z_left_thumb_tip_relative"]
+keypoint_index_right =  ["x_right_index_finger_tip_relative", "y_right_index_finger_tip_relative", "z_right_index_finger_tip_relative"]
+keypoint_index_left = ["x_left_index_finger_tip_relative", "y_left_index_finger_tip_relative", "z_left_index_finger_tip_relative"]
+keypoint_middle_right = ["x_right_middle_finger_tip_relative", "y_right_middle_finger_tip_relative", "z_right_middle_finger_tip_relative"]
+keypoint_middle_left = ["x_left_middle_finger_tip_relative", "y_left_middle_finger_tip_relative", "z_left_middle_finger_tip_relative"]
+keypoint_ring_right = ["x_right_ring_finger_tip_relative", "y_right_ring_finger_tip_relative", "z_right_ring_finger_tip_relative"]
+keypoint_ring_left = ["x_left_ring_finger_tip_relative", "y_left_ring_finger_tip_relative", "z_left_ring_finger_tip_relative"]
+keypoint_pinky_right =  ["x_right_pinky_finger_tip_relative", "y_right_pinky_finger_tip_relative", "z_right_pinky_finger_tip_relative"]
+keypoint_pinky_left = ["x_left_pinky_finger_tip_relative", "y_left_pinky_finger_tip_relative", "z_left_pinky_finger_tip_relative"]
+keypoint_wrist_right = ["x_right_wrist", "y_right_wrist", "z_right_wrist"]
+keypoint_wrist_left = ["x_left_wrist", "y_left_wrist", "z_left_wrist"]
+
+# make one 1 list with all keypoints
+keypoints_relative = list(itertools.chain(keypoint_thumb_right, keypoint_thumb_left, 
+                                 keypoint_index_right, keypoint_index_left, 
+                                 keypoint_middle_right, keypoint_middle_left, 
+                                 keypoint_ring_right, keypoint_ring_left, 
+                                 keypoint_pinky_right, keypoint_pinky_left, 
+                                 keypoint_wrist_right, keypoint_wrist_left))
+keypoints_relative_left = list(itertools.chain(keypoint_thumb_left, 
+                                 keypoint_index_left, 
+                                 keypoint_middle_left, 
+                                 keypoint_ring_left, 
+                                 keypoint_pinky_left, 
+                                 keypoint_wrist_left))
+keypoints_relative_right = list(itertools.chain(keypoint_thumb_right, 
+                                 keypoint_index_right, 
+                                 keypoint_middle_right, 
+                                 keypoint_ring_right, 
+                                 keypoint_pinky_right, 
+                                 keypoint_wrist_right))
+
+
+def get_relative_keypoints():
+    return keypoints_relative
+
+
 #make a function that takes in two timeseries and produces a normalized dtw distance
 def dtw_distance_normalized(ts1, ts2):
     ts1 = np.array(ts1)
@@ -50,70 +89,17 @@ def dtw_distance_normalized(ts1, ts2):
     return normalized_distance
 
 
-### Initiate the dtw distance function
-
-# identify which column indices in a dataframe correspond to which body parts
-keypoint_thumb_right = ["x_right_thumb_tip_relative", "y_right_thumb_tip_relative"]
-keypoint_thumb_left = ["x_left_thumb_tip_relative", "y_left_thumb_tip_relative"]
-keypoint_index_right =  ["x_right_index_finger_tip_relative", "y_right_index_finger_tip_relative"]
-keypoint_index_left = ["x_left_index_finger_tip_relative", "y_left_index_finger_tip_relative"]
-keypoint_middle_right = ["x_right_middle_finger_tip_relative", "y_right_middle_finger_tip_relative"]
-keypoint_middle_left = ["x_left_middle_finger_tip_relative", "y_left_middle_finger_tip_relative"]
-keypoint_ring_right = ["x_right_ring_finger_tip_relative", "y_right_ring_finger_tip_relative"]
-keypoint_ring_left = ["x_left_ring_finger_tip_relative", "y_left_ring_finger_tip_relative"]
-keypoint_pinky_right =  ["x_right_pinky_finger_tip_relative", "y_right_pinky_finger_tip_relative"]
-keypoint_pinky_left = ["x_left_pinky_finger_tip_relative", "y_left_pinky_finger_tip_relative"]
-keypoint_wrist_right = ["x_right_wrist", "y_right_wrist"] 
-keypoint_wrist_left = ["x_left_wrist", "y_left_wrist"]
-
-keypoint_thumb_right_xyz = ["x_right_thumb_tip_relative", "y_right_thumb_tip_relative", "z_right_thumb_tip_relative"]
-keypoint_thumb_left_xyz = ["x_left_thumb_tip_relative", "y_left_thumb_tip_relative", "z_left_thumb_tip_relative"]
-keypoint_index_right_xyz =  ["x_right_index_finger_tip_relative", "y_right_index_finger_tip_relative", "z_right_index_finger_tip_relative"]
-keypoint_index_left_xyz = ["x_left_index_finger_tip_relative", "y_left_index_finger_tip_relative", "z_left_index_finger_tip_relative"]
-keypoint_middle_right_xyz = ["x_right_middle_finger_tip_relative", "y_right_middle_finger_tip_relative", "z_right_middle_finger_tip_relative"]
-keypoint_middle_left_xyz = ["x_left_middle_finger_tip_relative", "y_left_middle_finger_tip_relative", "z_left_middle_finger_tip_relative"]
-keypoint_ring_right_xyz = ["x_right_ring_finger_tip_relative", "y_right_ring_finger_tip_relative", "z_right_ring_finger_tip_relative"]
-keypoint_ring_left_xyz = ["x_left_ring_finger_tip_relative", "y_left_ring_finger_tip_relative", "z_left_ring_finger_tip_relative"]
-keypoint_pinky_right_xyz =  ["x_right_pinky_finger_tip_relative", "y_right_pinky_finger_tip_relative", "z_right_pinky_finger_tip_relative"]
-keypoint_pinky_left_xyz = ["x_left_pinky_finger_tip_relative", "y_left_pinky_finger_tip_relative", "z_left_pinky_finger_tip_relative"]
-keypoint_wrist_right_xyz = ["x_right_wrist", "y_right_wrist", "z_right_wrist"]
-keypoint_wrist_left_xyz = ["x_left_wrist", "y_left_wrist", "z_left_wrist"]
-
-# make one 1 list with all keypoints
-keypoints_relative = list(itertools.chain(keypoint_thumb_right, keypoint_thumb_left, 
-                                 keypoint_index_right, keypoint_index_left, 
-                                 keypoint_middle_right, keypoint_middle_left, 
-                                 keypoint_ring_right, keypoint_ring_left, 
-                                 keypoint_pinky_right, keypoint_pinky_left, 
-                                 keypoint_wrist_right, keypoint_wrist_left,
-                                 keypoint_thumb_right_xyz, keypoint_thumb_left_xyz,
-                                 keypoint_index_right_xyz, keypoint_index_left_xyz,
-                                 keypoint_middle_right_xyz, keypoint_middle_left_xyz,
-                                 keypoint_ring_right_xyz, keypoint_ring_left_xyz,
-                                 keypoint_pinky_right_xyz, keypoint_pinky_left_xyz,
-                                 keypoint_wrist_right_xyz, keypoint_wrist_left_xyz))
-
-
-def get_relative_keypoints():
-    return keypoints_relative
-
-
-# make a dependent dtw such that each keypoint dtw distance is added up and divided by the number of keypoints
+### make a dependent dtw such that each keypoint dtw distance is added up and divided by the number of keypoints
 def dtw_distance_dependent(MT1, MT2, MT_B_flipped, reference, distance_array, hands_dtw, use_mirrored_ts):
     ### initialize all distance variables with NaN
     dis_left_thumb, dis_left_index, dis_left_middle, dis_left_ring, dis_left_pinky, dis_left_wrist = [np.nan]*6
     dis_right_thumb, dis_right_index, dis_right_middle, dis_right_ring, dis_right_pinky, dis_right_wrist = [np.nan]*6
     dis_left_right_thumb, dis_left_right_index, dis_left_right_middle, dis_left_right_ring, dis_left_right_pinky, dis_left_right_wrist = [np.nan]*6
     dis_right_left_thumb, dis_right_left_index, dis_right_left_middle, dis_right_left_ring, dis_right_left_pinky, dis_right_left_wrist = [np.nan]*6
-    dis_left_thumb_xyz, dis_left_index_xyz, dis_left_middle_xyz, dis_left_ring_xyz, dis_left_pinky_xyz, dis_left_wrist_xyz = [np.nan]*6
-    dis_right_thumb_xyz, dis_right_index_xyz, dis_right_middle_xyz, dis_right_ring_xyz, dis_right_pinky_xyz, dis_right_wrist_xyz = [np.nan]*6
-    dis_left_right_thumb_xyz, dis_left_right_index_xyz, dis_left_right_middle_xyz, dis_left_right_ring_xyz, dis_left_right_pinky_xyz, dis_left_right_wrist_xyz = [np.nan]*6
-    dis_right_left_thumb_xyz, dis_right_left_index_xyz, dis_right_left_middle_xyz, dis_right_left_ring_xyz, dis_right_left_pinky_xyz, dis_right_left_wrist_xyz = [np.nan]*6
     distance_left, distance_right, distance_left_mirrored, distance_right_mirrored, distance_left_right, distance_right_left = [np.nan]*6
-    distance_left_xyz, distance_right_xyz, distance_left_mirrored_xyz, distance_right_mirrored_xyz, distance_left_right_xyz, distance_right_left_xyz = [np.nan]*6
 
     if hands_dtw == "both" or hands_dtw == "left" in hands_dtw:
-        ### xy
+        ### xyz
         dis_left_thumb = dtw_distance_normalized(MT1[keypoint_thumb_left], MT2[keypoint_thumb_left])
         dis_left_index = dtw_distance_normalized(MT1[keypoint_index_left], MT2[keypoint_index_left])
         dis_left_middle = dtw_distance_normalized(MT1[keypoint_middle_left], MT2[keypoint_middle_left])
@@ -124,19 +110,8 @@ def dtw_distance_dependent(MT1, MT2, MT_B_flipped, reference, distance_array, ha
         distance_left = np.mean([dis_left_thumb, dis_left_index, dis_left_middle, 
                                     dis_left_ring, dis_left_pinky, dis_left_wrist])
 
-        ### xyz
-        dis_left_thumb_xyz = dtw_distance_normalized(MT1[keypoint_thumb_left_xyz], MT2[keypoint_thumb_left_xyz])
-        dis_left_index_xyz = dtw_distance_normalized(MT1[keypoint_index_left_xyz], MT2[keypoint_index_left_xyz])
-        dis_left_middle_xyz = dtw_distance_normalized(MT1[keypoint_middle_left_xyz], MT2[keypoint_middle_left_xyz])
-        dis_left_ring_xyz = dtw_distance_normalized(MT1[keypoint_ring_left_xyz], MT2[keypoint_ring_left_xyz])
-        dis_left_pinky_xyz = dtw_distance_normalized(MT1[keypoint_pinky_left_xyz], MT2[keypoint_pinky_left_xyz])
-        dis_left_wrist_xyz = dtw_distance_normalized(MT1[keypoint_wrist_left_xyz], MT2[keypoint_wrist_left_xyz])
-        ## calculate the mean distance for the hands
-        distance_left_xyz = np.mean([dis_left_thumb_xyz, dis_left_index_xyz, dis_left_middle_xyz, 
-                                        dis_left_ring_xyz, dis_left_pinky_xyz, dis_left_wrist_xyz])
-
     if hands_dtw == "both" or hands_dtw == "right" in hands_dtw:
-        ### xy
+        ### xyz
         dis_right_thumb = dtw_distance_normalized(MT1[keypoint_thumb_right], MT2[keypoint_thumb_right])
         dis_right_index = dtw_distance_normalized(MT1[keypoint_index_right], MT2[keypoint_index_right])
         dis_right_middle = dtw_distance_normalized(MT1[keypoint_middle_right], MT2[keypoint_middle_right])
@@ -144,23 +119,12 @@ def dtw_distance_dependent(MT1, MT2, MT_B_flipped, reference, distance_array, ha
         dis_right_pinky = dtw_distance_normalized(MT1[keypoint_pinky_right], MT2[keypoint_pinky_right])
         dis_right_wrist = dtw_distance_normalized(MT1[keypoint_wrist_right], MT2[keypoint_wrist_right])
         ## calculate the mean distance for the hands
-        distance_right = np.mean([dis_right_thumb, dis_right_index, dis_right_middle, 
-                                dis_right_ring, dis_right_pinky, dis_right_wrist])
-
-        ### xyz
-        dis_right_thumb_xyz = dtw_distance_normalized(MT1[keypoint_thumb_right_xyz], MT2[keypoint_thumb_right_xyz])
-        dis_right_index_xyz = dtw_distance_normalized(MT1[keypoint_index_right_xyz], MT2[keypoint_index_right_xyz])
-        dis_right_middle_xyz = dtw_distance_normalized(MT1[keypoint_middle_right_xyz], MT2[keypoint_middle_right_xyz])
-        dis_right_ring_xyz = dtw_distance_normalized(MT1[keypoint_ring_right_xyz], MT2[keypoint_ring_right_xyz])
-        dis_right_pinky_xyz = dtw_distance_normalized(MT1[keypoint_pinky_right_xyz], MT2[keypoint_pinky_right_xyz])
-        dis_right_wrist_xyz = dtw_distance_normalized(MT1[keypoint_wrist_right_xyz], MT2[keypoint_wrist_right_xyz])
-        ## calculate the mean distance for the hands
-        distance_right_xyz = np.mean([dis_right_thumb_xyz, dis_right_index_xyz, dis_right_middle_xyz,
-                                        dis_right_ring_xyz, dis_right_pinky_xyz, dis_right_wrist_xyz])
+        distance_right = np.mean([dis_right_thumb, dis_right_index, dis_right_middle,
+                                    dis_right_ring, dis_right_pinky, dis_right_wrist])
     
     ### calculate the distance for opposite hands (left thumb with right thumb, left index with right index, etc.)
     if "_" in hands_dtw: # if hands_dtw is left_right or right_left
-        ### xy
+        ### xyz
         dis_left_right_thumb = dtw_distance_normalized(MT1[keypoint_thumb_left], MT2[keypoint_thumb_right])
         dis_left_right_index = dtw_distance_normalized(MT1[keypoint_index_left], MT2[keypoint_index_right])
         dis_left_right_middle = dtw_distance_normalized(MT1[keypoint_middle_left], MT2[keypoint_middle_right])
@@ -173,31 +137,11 @@ def dtw_distance_dependent(MT1, MT2, MT_B_flipped, reference, distance_array, ha
         dis_right_left_ring = dtw_distance_normalized(MT1[keypoint_ring_right], MT2[keypoint_ring_left])
         dis_right_left_pinky = dtw_distance_normalized(MT1[keypoint_pinky_right], MT2[keypoint_pinky_left])
         dis_right_left_wrist = dtw_distance_normalized(MT1[keypoint_wrist_right], MT2[keypoint_wrist_left])
-
         ## calculate the mean distance for the opposite hands
         distance_left_right = np.mean([dis_left_right_thumb, dis_left_right_index, dis_left_right_middle,
                                         dis_left_right_ring, dis_left_right_pinky, dis_left_right_wrist])
         distance_right_left = np.mean([dis_right_left_thumb, dis_right_left_index, dis_right_left_middle,
                                         dis_right_left_ring, dis_right_left_pinky, dis_right_left_wrist])
-
-        ### xyz
-        dis_left_right_thumb_xyz = dtw_distance_normalized(MT1[keypoint_thumb_left_xyz], MT2[keypoint_thumb_right_xyz])
-        dis_left_right_index_xyz = dtw_distance_normalized(MT1[keypoint_index_left_xyz], MT2[keypoint_index_right_xyz])
-        dis_left_right_middle_xyz = dtw_distance_normalized(MT1[keypoint_middle_left_xyz], MT2[keypoint_middle_right_xyz])
-        dis_left_right_ring_xyz = dtw_distance_normalized(MT1[keypoint_ring_left_xyz], MT2[keypoint_ring_right_xyz])
-        dis_left_right_pinky_xyz = dtw_distance_normalized(MT1[keypoint_pinky_left_xyz], MT2[keypoint_pinky_right_xyz])
-        dis_left_right_wrist_xyz = dtw_distance_normalized(MT1[keypoint_wrist_left_xyz], MT2[keypoint_wrist_right_xyz])
-        dis_right_left_thumb_xyz = dtw_distance_normalized(MT1[keypoint_thumb_right_xyz], MT2[keypoint_thumb_left_xyz])
-        dis_right_left_index_xyz = dtw_distance_normalized(MT1[keypoint_index_right_xyz], MT2[keypoint_index_left_xyz])
-        dis_right_left_middle_xyz = dtw_distance_normalized(MT1[keypoint_middle_right_xyz], MT2[keypoint_middle_left_xyz])
-        dis_right_left_ring_xyz = dtw_distance_normalized(MT1[keypoint_ring_right_xyz], MT2[keypoint_ring_left_xyz])
-        dis_right_left_pinky_xyz = dtw_distance_normalized(MT1[keypoint_pinky_right_xyz], MT2[keypoint_pinky_left_xyz])
-        dis_right_left_wrist_xyz = dtw_distance_normalized(MT1[keypoint_wrist_right_xyz], MT2[keypoint_wrist_left_xyz])
-        ## calculate the mean distance for the opposite hands
-        distance_left_right_xyz = np.mean([dis_left_right_thumb_xyz, dis_left_right_index_xyz, dis_left_right_middle_xyz,
-                                            dis_left_right_ring_xyz, dis_left_right_pinky_xyz, dis_left_right_wrist_xyz])
-        distance_right_left_xyz = np.mean([dis_right_left_thumb_xyz, dis_right_left_index_xyz, dis_right_left_middle_xyz,
-                                            dis_right_left_ring_xyz, dis_right_left_pinky_xyz, dis_right_left_wrist_xyz])
 
     ### calculate the distance for flipped videos
     if "_" in hands_dtw and use_mirrored_ts: # if hands_dtw is left_right or right_left and use_mirrored_ts is True
@@ -207,7 +151,6 @@ def dtw_distance_dependent(MT1, MT2, MT_B_flipped, reference, distance_array, ha
             MT1 = MT_B_flipped
         
         ### left hand ###
-        ### xy
         dis_left_thumb = dtw_distance_normalized(MT1[keypoint_thumb_left], MT2[keypoint_thumb_left])
         dis_left_index = dtw_distance_normalized(MT1[keypoint_index_left], MT2[keypoint_index_left])
         dis_left_middle = dtw_distance_normalized(MT1[keypoint_middle_left], MT2[keypoint_middle_left])
@@ -218,19 +161,7 @@ def dtw_distance_dependent(MT1, MT2, MT_B_flipped, reference, distance_array, ha
         distance_left_mirrored = np.mean([dis_left_thumb, dis_left_index, dis_left_middle, 
                                             dis_left_ring, dis_left_pinky, dis_left_wrist])
 
-        ### xyz
-        dis_left_thumb_xyz = dtw_distance_normalized(MT1[keypoint_thumb_left_xyz], MT2[keypoint_thumb_left_xyz])
-        dis_left_index_xyz = dtw_distance_normalized(MT1[keypoint_index_left_xyz], MT2[keypoint_index_left_xyz])
-        dis_left_middle_xyz = dtw_distance_normalized(MT1[keypoint_middle_left_xyz], MT2[keypoint_middle_left_xyz])
-        dis_left_ring_xyz = dtw_distance_normalized(MT1[keypoint_ring_left_xyz], MT2[keypoint_ring_left_xyz])
-        dis_left_pinky_xyz = dtw_distance_normalized(MT1[keypoint_pinky_left_xyz], MT2[keypoint_pinky_left_xyz])
-        dis_left_wrist_xyz = dtw_distance_normalized(MT1[keypoint_wrist_left_xyz], MT2[keypoint_wrist_left_xyz])
-        ## calculate the mean distance for the hands
-        distance_left_mirrored_xyz = np.mean([dis_left_thumb_xyz, dis_left_index_xyz, dis_left_middle_xyz, 
-                                                dis_left_ring_xyz, dis_left_pinky_xyz, dis_left_wrist_xyz])
-
         ### right hand ###
-        ### xy
         dis_right_thumb = dtw_distance_normalized(MT1[keypoint_thumb_right], MT2[keypoint_thumb_right])
         dis_right_index = dtw_distance_normalized(MT1[keypoint_index_right], MT2[keypoint_index_right])
         dis_right_middle = dtw_distance_normalized(MT1[keypoint_middle_right], MT2[keypoint_middle_right])
@@ -241,101 +172,62 @@ def dtw_distance_dependent(MT1, MT2, MT_B_flipped, reference, distance_array, ha
         distance_right_mirrored = np.mean([dis_right_thumb, dis_right_index, dis_right_middle, 
                                             dis_right_ring, dis_right_pinky, dis_right_wrist])
 
-        ### xyz
-        dis_right_thumb_xyz = dtw_distance_normalized(MT1[keypoint_thumb_right_xyz], MT2[keypoint_thumb_right_xyz])
-        dis_right_index_xyz = dtw_distance_normalized(MT1[keypoint_index_right_xyz], MT2[keypoint_index_right_xyz])
-        dis_right_middle_xyz = dtw_distance_normalized(MT1[keypoint_middle_right_xyz], MT2[keypoint_middle_right_xyz])
-        dis_right_ring_xyz = dtw_distance_normalized(MT1[keypoint_ring_right_xyz], MT2[keypoint_ring_right_xyz])
-        dis_right_pinky_xyz = dtw_distance_normalized(MT1[keypoint_pinky_right_xyz], MT2[keypoint_pinky_right_xyz])
-        dis_right_wrist_xyz = dtw_distance_normalized(MT1[keypoint_wrist_right_xyz], MT2[keypoint_wrist_right_xyz])
-        ## calculate the mean distance for the hands
-        distance_right_mirrored_xyz = np.mean([dis_right_thumb_xyz, dis_right_index_xyz, dis_right_middle_xyz, 
-                                                dis_right_ring_xyz, dis_right_pinky_xyz, dis_right_wrist_xyz])
-
 
     if hands_dtw == "both":
-        distance = np.mean([distance_left, distance_right])
-        distance_xyz = np.mean([distance_left_xyz, distance_right_xyz])
+        distance = np.nanmean([distance_left, distance_right])
     elif hands_dtw == "left":
         distance = distance_left
-        distance_xyz = distance_left_xyz
     elif hands_dtw == "right":
         distance = distance_right
-        distance_xyz = distance_right_xyz
     elif "_" in hands_dtw:
         if reference == "A": # when speaker A is MT1 and speaker B MT2
             if hands_dtw == "left_right": # speaker A produces left-hand gesture and speaker B produces right-hand gesture
                 if use_mirrored_ts:
                     distance = min(distance_left_right, distance_left_mirrored)
-                    distance_xyz = min(distance_left_right_xyz, distance_left_mirrored_xyz)
                 else:
                     distance = distance_left_right
-                    distance_xyz = distance_left_right_xyz
             if hands_dtw == "right_left": # speaker A produces right-hand gesture and speaker B produces left-hand gesture
                 if use_mirrored_ts:
                     distance = min(distance_right_left, distance_right_mirrored)
-                    distance_xyz = min(distance_right_left_xyz, distance_right_mirrored_xyz)
                 else:
                     distance = distance_right_left
-                    distance_xyz = distance_right_left_xyz
         elif reference == "B": # when speaker B is MT1 and speaker A MT2
             if hands_dtw == "left_right": # speaker B produces left-hand gesture and speaker A produces right-hand gesture
                 if use_mirrored_ts:
                     distance = min(distance_right_left, distance_left_mirrored)
-                    distance_xyz = min(distance_right_left_xyz, distance_left_mirrored_xyz)
                 else:
                     distance = distance_right_left
-                    distance_xyz = distance_right_left_xyz
             if hands_dtw == "right_left":
                 if use_mirrored_ts:
                     distance = min(distance_left_right, distance_right_mirrored)
-                    distance_xyz = min(distance_left_right_xyz, distance_right_mirrored_xyz)
                 else:
                     distance = distance_left_right
-                    distance_xyz = distance_left_right_xyz
 
     #make a np array and append the each distance to the dataframe
     distance_array = np.append(distance_array, 
-                               [distance, distance_xyz,
-                               ## xy
+                                [distance,
                                 dis_left_thumb, dis_right_thumb, dis_left_index, dis_right_index, 
                                 dis_left_middle, dis_right_middle, dis_left_ring, dis_right_ring, 
                                 dis_left_pinky, dis_right_pinky, dis_left_wrist, dis_right_wrist,
                                 dis_left_right_thumb, dis_left_right_index, dis_left_right_middle,
                                 dis_left_right_ring, dis_left_right_pinky, dis_left_right_wrist,
                                 dis_right_left_thumb, dis_right_left_index, dis_right_left_middle,
-                                dis_right_left_ring, dis_right_left_pinky, dis_right_left_wrist,
-                                ## xyz
-                                dis_left_thumb_xyz, dis_right_thumb_xyz, dis_left_index_xyz, dis_right_index_xyz,
-                                dis_left_middle_xyz, dis_right_middle_xyz, dis_left_ring_xyz, dis_right_ring_xyz,
-                                dis_left_pinky_xyz, dis_right_pinky_xyz, dis_left_wrist_xyz, dis_right_wrist_xyz,
-                                dis_left_right_thumb_xyz, dis_left_right_index_xyz, dis_left_right_middle_xyz,
-                                dis_left_right_ring_xyz, dis_left_right_pinky_xyz, dis_left_right_wrist_xyz,
-                                dis_right_left_thumb_xyz, dis_right_left_index_xyz, dis_right_left_middle_xyz,
-                                dis_right_left_ring_xyz, dis_right_left_pinky_xyz, dis_right_left_wrist_xyz])
+                                dis_right_left_ring, dis_right_left_pinky, dis_right_left_wrist])
 
     return distance_array
 
 
+### function for exporting the dtw distances to a dataframe and saving it as a csv file
 def make_export_dtw_df(dtw_folder, ts_annot_folder, keypoints, anno, use_mirrored_ts=False):
     # make an empty dataframe to store the results
-    df_distance = pd.DataFrame(columns=["pair", "comparison_id", "average_distance", "average_distance_xyz",
-                                        ## xy
-                                        "left_thumb", "right_thumb", "left_index", "right_index", 
-                                        "left_middle", "right_middle", "left_ring", "right_ring", 
-                                        "left_pinky", "right_pinky", "left_wrist", "right_wrist",
-                                        "left_right_thumb", "left_right_index", "left_right_middle",
-                                        "left_right_ring", "left_right_pinky", "left_right_wrist",
-                                        "right_left_thumb", "right_left_index", "right_left_middle",
-                                        "right_left_ring", "right_left_pinky", "right_left_wrist",
-                                        ## xyz
-                                        "left_thumb_xyz", "right_thumb_xyz", "left_index_xyz", "right_index_xyz",
-                                        "left_middle_xyz", "right_middle_xyz", "left_ring_xyz", "right_ring_xyz",
-                                        "left_pinky_xyz", "right_pinky_xyz", "left_wrist_xyz", "right_wrist_xyz",
-                                        "left_right_thumb_xyz", "left_right_index_xyz", "left_right_middle_xyz",
-                                        "left_right_ring_xyz", "left_right_pinky_xyz", "left_right_wrist_xyz",
-                                        "right_left_thumb_xyz", "right_left_index_xyz", "right_left_middle_xyz",
-                                        "right_left_ring_xyz", "right_left_pinky_xyz", "right_left_wrist_xyz"])
+    df_distance = pd.DataFrame(columns=["pair", "comparison_id", "average_distance", 
+                                            "left_thumb", "right_thumb", "left_index", "right_index", 
+                                            "left_middle", "right_middle", "left_ring", "right_ring", 
+                                            "left_pinky", "right_pinky", "left_wrist", "right_wrist",
+                                            "left_right_thumb", "left_right_index", "left_right_middle",
+                                            "left_right_ring", "left_right_pinky", "left_right_wrist",
+                                            "right_left_thumb", "right_left_index", "right_left_middle",
+                                            "right_left_ring", "right_left_pinky", "right_left_wrist"])
 
     # specify columns we want to keep in the timeseries dataframe (before merging with annotations)
     cols_to_keep = ["File", "Speaker", "comparison_id", "time"]
