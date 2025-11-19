@@ -280,8 +280,8 @@ scp_feature = df_dtw_zoom_long %>%
        y="Normalized DTW distance") +
   scale_x_continuous(limits = c(0, 5),
                      breaks = seq(0, 5, 1)) +
-  scale_y_continuous(limits = c(0, 1),
-                     breaks = seq(0, 1, 0.2)) +
+  scale_y_continuous(limits = c(0, .75),
+                     breaks = seq(0, 0.6, 0.2)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -309,8 +309,8 @@ scp_feature_res = df_dtw_zoom_long_res %>%
            method="pearson") +
   labs(x="Similarity score (residuals)", 
        y="Normalized DTW distance") +
-  scale_y_continuous(limits = c(0, 1),
-                     breaks = seq(0, 1, 0.2)) +
+  scale_y_continuous(limits = c(0, 0.75),
+                     breaks = seq(0, 0.6, 0.2)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -342,8 +342,8 @@ scp_total = df_dtw_zoom %>%
        y="Normalized DTW distance") +
   scale_x_continuous(limits = c(0, 20),
                      breaks = seq(0, 20, 5)) +
-  scale_y_continuous(limits = c(0, 1),
-                     breaks = seq(0, 1, 0.2)) +
+  scale_y_continuous(limits = c(0, .65),
+                     breaks = seq(0, 6, 0.2)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -396,8 +396,8 @@ scp_feature_z = df_dtw_zoom_long %>%
        y="Normalized DTW distance") +
   scale_x_continuous(limits = c(-2.5, 2),
                      breaks = seq(-2.5, 2, 1)) +
-  scale_y_continuous(limits = c(0, 1),
-                     breaks = seq(0, 1, 0.2)) +
+  scale_y_continuous(limits = c(0, .75),
+                     breaks = seq(0, 0.6, 0.2)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -427,8 +427,8 @@ scp_total_z = df_dtw_zoom %>%
        y="Normalized DTW distance") +
   scale_x_continuous(limits = c(-2.2, 1.5),
                      breaks = seq(-2, 1.5, 0.5)) +
-  scale_y_continuous(limits = c(0, 1),
-                     breaks = seq(0, 1, 0.2)) +
+  scale_y_continuous(limits = c(0, 0.65),
+                     breaks = seq(0, 0.6, 0.2)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -3549,8 +3549,8 @@ scp_feature = df_dtw_zoom_v2_long %>%
        y="Normalized DTW distance") +
   scale_x_continuous(limits = c(0, 5),
                      breaks = seq(0, 5, 1)) +
-  scale_y_continuous(limits = c(0, 0.8),
-                     breaks = seq(0, 0.8, 0.2)) +
+  scale_y_continuous(limits = c(0, 0.65),
+                     breaks = seq(0, 0.4, 0.2)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -3611,8 +3611,8 @@ scp_total = df_dtw_zoom_v2 %>%
        y="Normalized DTW distance") +
   scale_x_continuous(limits = c(0, 20),
                      breaks = seq(0, 20, 5)) +
-  scale_y_continuous(limits = c(0, 0.8),
-                     breaks = seq(0, 0.8, 0.2)) +
+  scale_y_continuous(limits = c(0, 0.55),
+                     breaks = seq(0, 0.4, 0.2)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),

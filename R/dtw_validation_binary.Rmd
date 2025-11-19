@@ -419,7 +419,7 @@ dis_zoom_feature = df_dtw_zoom_long %>%
   scale_color_manual(values = c("#ED6B06", "grey"),
                     name = c("Similarity")) +
   scale_y_continuous(breaks = seq(0, 1, 0.2)) +
-  coord_cartesian(ylim = c(0, 0.9)) +
+  coord_cartesian(ylim = c(0, 0.65)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -456,13 +456,13 @@ dis_zoom_n_features = df_dtw_zoom %>%
               method = "lm", size = 1) +
   stat_cor(aes(group = 1),
            p.accuracy = 0.001, r.accuracy = 0.01,
-           label.y = 0.9,
+           label.y = 0.65,
            method="spearman") +
   labs(x="Number of similar features", 
        y="Normalized DTW distance") +
-  scale_y_continuous(breaks = seq(0, 0.8, 0.2)) +
+  scale_y_continuous(breaks = seq(0, 0.6, 0.2)) +
   coord_cartesian(xlim = c(-0.2, 4.6), 
-                  ylim = c(0, 0.9)) +
+                  ylim = c(0, 0.65)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -700,7 +700,7 @@ dis_zoom_v2_feature = df_dtw_zoom_v2_long %>%
   scale_color_manual(values = c("#ED6B06", "grey"),
                     name = c("Similarity")) +
   scale_y_continuous(breaks = seq(0, 1, 0.2)) +
-  coord_cartesian(ylim = c(0, 0.7)) +
+  coord_cartesian(ylim = c(0, 0.5)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
@@ -737,13 +737,13 @@ dis_zoom_v2_n_features = df_dtw_zoom_v2 %>%
               method = "lm", size = 1) +
   stat_cor(aes(group = 1),
            p.accuracy = 0.001, r.accuracy = 0.01,
-           label.y = 0.7,
+           label.y = 0.5,
            method="spearman") +
   labs(x="Number of similar features", 
        y="Normalized DTW distance") +
-  scale_y_continuous(breaks = seq(0, 0.8, 0.2)) +
+  scale_y_continuous(breaks = seq(0, 0.5, 0.2)) +
   coord_cartesian(xlim = c(-0.2, 4.6), 
-                  ylim = c(0, 0.7)) +
+                  ylim = c(0, 0.5)) +
   theme_classic(base_size = 14) +
   theme(axis.text.x = element_text(colour = "black", size = 13),
         axis.text.y = element_text(colour = "black", size = 13),
