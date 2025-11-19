@@ -6317,6 +6317,8 @@ df_dtw_zoom_v2_long = left_join(df_dtw_zoom_v2_long, df_dtw_zoom_v2_long_z) %>%
 
 <br>
 
+## Data visualization
+
 ### by SMOP features
 
 ``` r

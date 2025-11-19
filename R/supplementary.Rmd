@@ -53,24 +53,24 @@ Let's run some simulations to understand the effect of beta and variance on corr
 
 [Study 2 without mirroring]
 
-- `mean distance` = 0.33
-- `effect_size_s` (beta) = -0.038
-- `sd_l` (sigma) = 0.15
+- `mean distance` = 0.24
+- `effect_size_s` (beta) = -0.0267
+- `sd_l` (sigma) = 	0.104
 
 [modified approach]
 
-- `mean distance` = 0.29
-- `effect_size_s` (beta) = -0.046
-- `sd_l` (sigma) = 0.122
+- `mean distance` = 0.214
+- `effect_size_s` (beta) = -0.032
+- `sd_l` (sigma) = 0.085
 
 ```{r corr_sim}
 set.seed(123)
 
 ### simulate dataframe with small effect size & large deviation (Study 2 without mirroring)
 n = 1000
-mean = 0.31 # mean(0.33, 0.29)
-effect_size_s = -0.038
-sd_l = 0.15
+mean = 0.227 # mean(0.24, 0.214)
+effect_size_s = -0.0267
+sd_l = 0.104
 x = as.integer(runif(n, min=0, max=4))
 y = effect_size_s*x + rnorm(n, mean, sd_l)
 
@@ -84,7 +84,7 @@ print(cor1$estimate)
 
 
 ### simulate dataframe with small effect size & small deviation
-sd_s = 0.122
+sd_s = 0.085
 x = as.integer(runif(n, min=0, max=4))
 y = effect_size_s*x + rnorm(n, mean, sd_s)
 
@@ -98,7 +98,7 @@ print(cor2$estimate)
 
 
 ### simulate dataframe with large effect size & small deviation (with mirroring)
-effect_size_l = -0.046
+effect_size_l = -0.032
 x = as.integer(runif(n, min=0, max=4))
 y = effect_size_l*x + rnorm(n, mean, sd_s)
 
@@ -118,23 +118,23 @@ print(paste0("diff between df1 and df3: ", round(cor3$estimate - cor1$estimate, 
 p1 = ggplot(df1, aes(x=x, y=y)) +
   geom_point(alpha=0.3) +
   geom_smooth(method="lm", color="blue") +
-  coord_cartesian(ylim=c(0, 0.8)) +
+  coord_cartesian(ylim=c(0, 0.6)) +
   ggtitle("small effect size & large deviation")
 p2 = ggplot(df2, aes(x=x, y=y)) +
   geom_point(alpha=0.3) +
   geom_smooth(method="lm", color="blue") +
-  coord_cartesian(ylim=c(0, 0.8)) +
+  coord_cartesian(ylim=c(0, 0.6)) +
   ggtitle("small effect size & small deviation")
 p3 = ggplot(df3, aes(x=x, y=y)) +
   geom_point(alpha=0.3) +
   geom_smooth(method="lm", color="blue") +
-  coord_cartesian(ylim=c(0, 0.8)) +
+  coord_cartesian(ylim=c(0, 0.6)) +
   ggtitle("large effect size & small deviation")
 
 grid.arrange(p1, p2, p3, ncol=3)
 ```
 
-The simulation shows that (i) larger effect size leads to higher correlation, and (ii) smaller SD leads to higher correlation. In the simulation, the correlation score improved approximately by 0.14, which is very close to the degree of improvement we observed in the data.
+The simulation shows that (i) larger effect size leads to higher correlation, and (ii) smaller SD leads to higher correlation. In the simulation, the correlation score improved approximately by 0.14, which is close to the degree of improvement we observed in the data.
 
 <br>
 
