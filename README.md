@@ -6,3 +6,7 @@ The Python scripts (under "kinematics") were used to preprocess motion tracking 
 
 # DTW tutorial
 For an accessible tutorial on DTW, please see this [DTW tutorial](https://github.com/ShoAkamine/dtw-tutorial) created based on the article.
+
+
+# User guide
+If users wish to run the analyses (e.g., DTW distance computation), please download the MediaPipe motion tracking data from the [OSF repository](https://osf.io/4bqys) and place them in the `kinematics/[study1 or study2]/processed/01_merged_ts` directory before running the scripts.
